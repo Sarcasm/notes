@@ -1,10 +1,11 @@
-Notes
-=====
+Topics
+======
 
 .. toctree::
-   :caption: Topics
    :maxdepth: 1
    :glob:
+
+   */index
 
 Indices and tables
 ==================
