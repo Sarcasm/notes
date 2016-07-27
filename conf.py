@@ -5,15 +5,11 @@
 # containing dir.
 #
 
-import sys
-import os
-import shlex
-
 # -- General configuration ------------------------------------------------
 
 # General information about the project.
 project = 'Sarcasm tips'
-copyright = '2015, Guillaume Papin'
+copyright = '2016, Guillaume Papin'
 author = 'Guillaume Papin'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -66,7 +62,7 @@ extensions = [
 nitpicky = True
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['.templates']
+templates_path = [] # '.templates'
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
 #add_function_parentheses = True
@@ -125,7 +121,7 @@ html_title = "Sarcasm notebook"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['.static']
+html_static_path = [] # '.static'
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
