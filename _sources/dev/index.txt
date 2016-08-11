@@ -9,3 +9,4 @@ Stuff related to programming and programmer tooling.
    :name: mastertoc
    
    clang-tidy
+   compilation-database

@@ -80,7 +80,7 @@ by using the CMake variable `CMAKE_<LANG>_CLANG_TIDY`_.
 Please note that, ``clang-tidy`` arguments should be a CMake list,
 each argument separated by ``;`` on the command line.
 
-.. _CMAKE_<LANG>_CLANG_TIDY: https://cmake.org/cmake/help/v3.6/prop_tgt/LANG_CLANG_TIDY.html#prop_tgt:<LANG>_CLANG_TIDY
+.. _CMAKE_<LANG>_CLANG_TIDY: https://cmake.org/cmake/help/latest/prop_tgt/LANG_CLANG_TIDY.html#prop_tgt:<LANG>_CLANG_TIDY
 
 To use ``clang-tidy`` on a C++ project, type::
 
