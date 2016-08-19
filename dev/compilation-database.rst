@@ -53,13 +53,49 @@ CMake
 -----
 
 To generate a JSON compilation database with CMake_,
-enable the `CMAKE_EXPORT_COMPILE_COMMANDS`_ option.
+enable the `CMAKE_EXPORT_COMPILE_COMMANDS`_ option
+(requires ``CMake >= 2.8.5``).
 
 For example, in an existing build directory, type::
 
   cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
 
 This will create a file name ``compile_commands.json`` in the build directory.
+
+
+Ninja
+-----
+
+To generate a JSON compilation database with Ninja_,
+use the `-t compdb`_ option (requires ``Ninja >= 1.2``).
+This option takes a list of rules as argument.
+
+Usage::
+
+  ninja -t compdb [RULES...]
+
+This works well with projects containing one rule for C++ files,
+such as Ninja_ itself::
+
+  ninja -t compdb cxx > compile_commands.json
+
+However, it gets ugly if the Ninja build files contains a lot of rules.
+You have to find a way to get a list of all the rules.
+For example,
+as of version 3.6.1,
+CMake generates a lot of rules.
+To generate a compilation database of Clang using CMake's Ninja generator
+(``cmake -G Ninja <...>``)::
+
+  ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' rules.ninja) > compile_commands.json
+
+This method is not ideal,
+the ``awk`` line is not really good parser for Ninja syntax.
+To make things better,
+there is an issue on the ninja bug tracker with an associated pull request:
+
+* https://github.com/ninja-build/ninja/issues/1024
+* https://github.com/ninja-build/ninja/pull/1025
 
 
 Other tools
@@ -228,6 +264,8 @@ With ``intercept-build``, replace the last line by::
 .. _extra Clang tools: http://clang.llvm.org/extra/index.html
 .. _CMake: https://cmake.org
 .. _CMAKE_EXPORT_COMPILE_COMMANDS: https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html
+.. _Ninja: https://ninja-build.org
+.. _-t compdb: https://ninja-build.org/manual.html#_extra_tools
 .. _Bear: https://github.com/rizsotto/Bear
 .. _scan-build: https://github.com/rizsotto/scan-build
 .. _László Nagy: https://github.com/rizsotto
