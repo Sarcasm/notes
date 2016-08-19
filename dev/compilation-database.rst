@@ -1,5 +1,7 @@
+
+********************
 Compilation database
-====================
+********************
 
 .. contents::
    :local:
@@ -7,7 +9,7 @@ Compilation database
 
 
 What is a compilation database?
--------------------------------
+===============================
 
 A compilation database is a database for compile options.
 It records which compile options are used to build the files in a project.
@@ -42,13 +44,13 @@ It can be useful to:
 
 
 Build tools
------------
+===========
 
 This section describes build tools which natively support
 the generation of a compilation database.
 
 CMake
-~~~~~
+-----
 
 To generate a JSON compilation database with CMake_,
 enable the `CMAKE_EXPORT_COMPILE_COMMANDS`_ option.
@@ -61,7 +63,7 @@ This will create a file name ``compile_commands.json`` in the build directory.
 
 
 Other tools
------------
+===========
 
 Some build systems do not support generating a compilation database.
 
@@ -72,8 +74,9 @@ A non-exhaustive list, includes:
 
 For this reason, a few tools have emerged to respond to this issue.
 
+
 bear and intercept-build
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Bear_ and `intercept-build` from scan-build_,
 are two tools from `László Nagy`_,
@@ -99,14 +102,16 @@ Example::
 
 A file named ``compile_commands.json`` is created in the current directory.
 
+
 compdb
-~~~~~~
+------
 
 compdb_ is a versatile tool to manipulate compilation databases.
 It can for example generate a compilation database for header files.
 
+
 sw-btrace
-~~~~~~~~~
+---------
 
 sourceweb_\ 's btrace_ tool, aka ``sw-btrace``, use the same principle as `bear and intercept-build`_.
 
@@ -123,8 +128,9 @@ Example::
 
 A file named ``compile_commands.json`` is created in the current directory.
 
+
 xcpretty
-~~~~~~~~
+--------
 
 xcpretty_ can generate a compilation database for Xcode projects.
 To do so, it uses the ``xcodebuild`` output.
@@ -133,8 +139,9 @@ Usage::
 
     xcodebuild | xcpretty -r json-compilation-database
 
+
 YCM-Generator
-~~~~~~~~~~~~~
+-------------
 
 YCM-Generator_ works differently than `bear and intercept-build`_.
 It builds a project using a *fake toolchain*.
@@ -145,7 +152,7 @@ The tool does not actually generate a "JSON Compilation Database",
 instead it creates a configuration file for YouCompleteMe_.
 
 Case studies on a few open source projects
-------------------------------------------
+==========================================
 
 This section describes how to generate a compilation database
 for a few open source projects.
@@ -180,8 +187,9 @@ The result should preferrably be:
   just to make the file show up in the database,
   it's not pleasant.
 
+
 git
-~~~
+---
 
 git_ uses a custom Makefile and a ``configure`` scripts for the build.
 The build system does not seem to have native support
