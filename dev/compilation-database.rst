@@ -5,7 +5,6 @@ Compilation database
 
 .. contents::
    :local:
-   :depth: 2
 
 
 What is a compilation database?
@@ -28,19 +27,76 @@ A real-world JSON Compilation Database *entry* looks like this:
       "file": "/home/user/dev/llvm/llvm/lib/Support/APFloat.cpp"
     }
 
-You might wonder what a compilation database is good for?
 
-It can be useful to:
+.. note:: A good introduction to compilation databases
+          is available on Eli Bendersky's blog:
 
-* Text editors and IDEs, to provide more insight to the code.
-  For example on-the-fly syntax checking, completions, disassembly view.
-* `core Clang tools`_ and `extra Clang tools`_, such as clang-tidy_.
-* Other external tools, whether they are based on Clang or not.
+          * `Compilation databases for Clang-based tools`_
 
-.. seealso:: A good introduction to compilation databases
-             is available on Eli Bendersky's blog:
 
-             * `Compilation databases for Clang-based tools`_
+What is it good for?
+====================
+
+You might wonder what a compilation database is good for.
+This section list a various tools that may benefit from a compilation database.
+
+
+Clang tools
+-----------
+
+`Core Clang tools`_ and `extra Clang tools`_:
+
+* `clang-check <http://clang.llvm.org/docs/ClangCheck.html>`_
+* `clang-include-fixer <http://clang.llvm.org/extra/include-fixer.html>`_
+* `clang-rename <http://clang.llvm.org/extra/clang-rename.html>`_
+* `clang-tidy <http://clang.llvm.org/extra/clang-tidy>`_
+
+
+Text editors and IDEs
+---------------------
+
+To bring basic IDE-like features to text editor you need 2 things:
+
+1. text editor plugin which integrates libclang_
+2. a compilation database, to feed to libclang_
+
+With this, you can have features such as semantic code completion
+and on-the-fly syntax checking.
+
+
+GNU Emacs
+^^^^^^^^^
+
+* https://github.com/abingham/emacs-ycmd
+* https://github.com/Andersbakken/rtags
+* https://github.com/kumar8600/flycheck-clangcheck
+* https://github.com/randomphrase/ede-compdb
+* https://github.com/Sarcasm/irony-mode
+
+
+Vim
+^^^
+
+* http://valloric.github.io/YouCompleteMe
+* https://github.com/Rip-Rip/clang_complete
+* https://github.com/jeaye/color_coded
+
+
+Other tools
+-----------
+
+* With little effort the Kythe_ indexer can be run on a compilation database.
+
+* Your your own tool based on Clang's LibTooling_.
+
+* `cc_driver.pl`_ from the `Mo' Static <http://btorpey.github.io/blog/2016/04/07/mo-static/>`_
+  article.
+
+.. seealso::
+
+   Some of the tools listed here:
+
+   * http://clang.llvm.org/docs/ExternalClangExamples.html
 
 
 Build tools
@@ -139,11 +195,52 @@ Example::
 A file named ``compile_commands.json`` is created in the current directory.
 
 
+cc_args.py
+----------
+
+The `cc_args.py`_ script
+from the `clang_complete <https://github.com/Rip-Rip/clang_complete>`_ Vim plugin.
+
+This tool does not generate a JSON compilation database,
+instead it generates a `.clang_complete <https://github.com/Rip-Rip/clang_complete/blob/c7f5673a5d31704e9ec43d43c0606b243d5ef623/doc/clang_complete.txt#L59-L87>`_
+configuration file.
+
+Usage::
+
+  make CC='~/.vim/bin/cc_args.py gcc' CXX='~/.vim/bin/cc_args.py g++' -B
+
+
 compdb
 ------
 
 compdb_ is a versatile tool to manipulate compilation databases.
 It can for example generate a compilation database for header files.
+
+
+gccrec
+------
+
+The ``gccrec`` tool from the now unmaintained `gccsense
+<https://github.com/m2ym/gccsense>`_ project.
+
+The tool does not generate a JSON compilation database,
+instead it records the compile options in an SQLite database.
+
+Links to the manual for reference:
+
+* `txt <https://github.com/m2ym/gccsense/blob/67c76de401b3d11ccbba0e6d782c8686a341aabf/doc/manual.txt#L205-L252>`_
+* `HTML <https://web.archive.org/web/20150223192059/http://cx4a.org/software/gccsense/manual.html#gccrec>`_
+
+
+rtags
+-----
+
+The rtags_ project has a gcc wrapper named ``gcc-rtags-wrapper.sh``
+to help feed its internal compilation database.
+
+See description here:
+
+* https://github.com/Andersbakken/rtags/#setup
 
 
 sw-btrace
@@ -255,13 +352,20 @@ With ``intercept-build``, replace the last line by::
   Not using it results in a crash.
   This is using scan-build version 1.1.
 
+  Question asked to the maintainer:
+
+  * https://github.com/rizsotto/scan-build/issues/51
+
 
 .. _JSON Compilation Database: http://clang.llvm.org/docs/JSONCompilationDatabase.html
 .. _`clang::tooling::CompilationDatabase`: http://clang.llvm.org/doxygen/classclang_1_1tooling_1_1CompilationDatabase.html
-.. _clang-tidy: http://clang.llvm.org/extra/clang-tidy
 .. _Compilation databases for Clang-based tools: http://eli.thegreenplace.net/2014/05/21/compilation-databases-for-clang-based-tools
-.. _core Clang tools: http://clang.llvm.org/docs/ClangTools.html
+.. _libclang: http://clang.llvm.org/doxygen/group__CINDEX.html
+.. _Core Clang tools: http://clang.llvm.org/docs/ClangTools.html
 .. _extra Clang tools: http://clang.llvm.org/extra/index.html
+.. _Kythe: https://www.kythe.io
+.. _LibTooling: http://clang.llvm.org/docs/LibTooling.html
+.. _cc_driver.pl: http://btorpey.github.io/pages/cc_driver.pl/index.html
 .. _CMake: https://cmake.org
 .. _CMAKE_EXPORT_COMPILE_COMMANDS: https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html
 .. _Ninja: https://ninja-build.org
@@ -272,6 +376,7 @@ With ``intercept-build``, replace the last line by::
 .. _pip: https://pip.pypa.io/en/stable/
 .. _YCM-Generator: https://github.com/rdnetto/YCM-Generator
 .. _YouCompleteMe: https://github.com/Valloric/YouCompleteMe
+.. _rtags: https://github.com/Andersbakken/rtags
 .. _sourceweb: https://github.com/rprichard/sourceweb
 .. _btrace: https://github.com/rprichard/sourceweb#btrace
 .. _xcpretty: https://github.com/supermarin/xcpretty
