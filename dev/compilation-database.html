@@ -372,18 +372,8 @@ This is used in this example to match the developer workflow better.</p>
 </pre></div>
 </div>
 <p>With <code class="docutils literal"><span class="pre">intercept-build</span></code>, replace the last line by:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">intercept</span><span class="o">-</span><span class="n">build</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">compiler</span> <span class="n">make</span> <span class="o">-</span><span class="n">j9</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">intercept</span><span class="o">-</span><span class="n">build</span> <span class="n">make</span> <span class="o">-</span><span class="n">j9</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>I&#8217;m not sure why <code class="docutils literal"><span class="pre">--override-compiler</span></code> is needed.
-Not using it results in a crash.
-This is using scan-build version 1.1.</p>
-<p>Question asked to the maintainer:</p>
-<ul class="last simple">
-<li><a class="reference external" href="https://github.com/rizsotto/scan-build/issues/51">https://github.com/rizsotto/scan-build/issues/51</a></li>
-</ul>
 </div>
 </div>
 </div>

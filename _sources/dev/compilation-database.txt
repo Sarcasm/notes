@@ -344,17 +344,8 @@ Compilation database generation with ``bear``::
 
 With ``intercept-build``, replace the last line by::
 
-  intercept-build --override-compiler make -j9
+  intercept-build make -j9
 
-.. note::
-
-  I'm not sure why ``--override-compiler`` is needed.
-  Not using it results in a crash.
-  This is using scan-build version 1.1.
-
-  Question asked to the maintainer:
-
-  * https://github.com/rizsotto/scan-build/issues/51
 
 
 .. _JSON Compilation Database: http://clang.llvm.org/docs/JSONCompilationDatabase.html
