@@ -131,14 +131,21 @@ Other tools
    * http://clang.llvm.org/docs/ExternalClangExamples.html
 
 
-Build tools
-===========
+How to generate a JSON Compilation Database?
+============================================
+
+.. contents::
+   :local:
+
+
+Build system
+------------
 
 This section describes build tools which natively support
 the generation of a compilation database.
 
 CMake
------
+^^^^^
 
 To generate a JSON compilation database with CMake_,
 enable the `CMAKE_EXPORT_COMPILE_COMMANDS`_ option
@@ -152,7 +159,7 @@ This will create a file name ``compile_commands.json`` in the build directory.
 
 
 Ninja
------
+^^^^^
 
 To generate a JSON compilation database with Ninja_,
 use the `-t compdb`_ option (requires ``Ninja >= 1.2``).
@@ -186,8 +193,8 @@ there is an issue on the ninja bug tracker with an associated pull request:
 * https://github.com/ninja-build/ninja/pull/1025
 
 
-Other tools
-===========
+Specialized tools
+-----------------
 
 Some build systems do not support generating a compilation database.
 
@@ -200,7 +207,7 @@ For this reason, a few tools have emerged to respond to this issue.
 
 
 bear and intercept-build
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Bear_ and `intercept-build` from scan-build_,
 are two tools from `László Nagy`_,
@@ -227,56 +234,15 @@ Example::
 A file named ``compile_commands.json`` is created in the current directory.
 
 
-cc_args.py
-----------
-
-The `cc_args.py`_ script
-from the `clang_complete <https://github.com/Rip-Rip/clang_complete>`_ Vim plugin.
-
-This tool does not generate a JSON compilation database,
-instead it generates a `.clang_complete <https://github.com/Rip-Rip/clang_complete/blob/c7f5673a5d31704e9ec43d43c0606b243d5ef623/doc/clang_complete.txt#L59-L87>`_
-configuration file.
-
-Usage::
-
-  make CC='~/.vim/bin/cc_args.py gcc' CXX='~/.vim/bin/cc_args.py g++' -B
-
-
 compdb
-------
+^^^^^^
 
-compdb_ is a versatile tool to manipulate compilation databases.
-It can for example generate a compilation database for header files.
-
-
-gccrec
-------
-
-The ``gccrec`` tool from the now unmaintained `gccsense
-<https://github.com/m2ym/gccsense>`_ project.
-
-The tool does not generate a JSON compilation database,
-instead it records the compile options in an SQLite database.
-
-Links to the manual for reference:
-
-* `txt <https://github.com/m2ym/gccsense/blob/67c76de401b3d11ccbba0e6d782c8686a341aabf/doc/manual.txt#L205-L252>`_
-* `HTML <https://web.archive.org/web/20150223192059/http://cx4a.org/software/gccsense/manual.html#gccrec>`_
-
-
-rtags
------
-
-The rtags_ project has a gcc wrapper named ``gcc-rtags-wrapper.sh``
-to help feed its internal compilation database.
-
-See description here:
-
-* https://github.com/Andersbakken/rtags/#setup
+compdb_ is a tool to manipulate compilation databases.
+It can generate a compilation database for header files.
 
 
 sw-btrace
----------
+^^^^^^^^^
 
 sourceweb_\ 's btrace_ tool, aka ``sw-btrace``, use the same principle as `bear and intercept-build`_.
 
@@ -295,7 +261,7 @@ A file named ``compile_commands.json`` is created in the current directory.
 
 
 xcpretty
---------
+^^^^^^^^
 
 xcpretty_ can generate a compilation database for Xcode projects.
 To do so, it uses the ``xcodebuild`` output.
@@ -303,6 +269,54 @@ To do so, it uses the ``xcodebuild`` output.
 Usage::
 
     xcodebuild | xcpretty -r json-compilation-database
+
+
+Other compilation databases and tools
+=====================================
+
+This section shows that people invented their own compilation database version.
+Either because no standards existed yet, or because of specialized needs.
+
+
+cc_args.py
+----------
+
+The `cc_args.py`_ script
+from the Vim plugin `clang_complete
+<https://github.com/Rip-Rip/clang_complete>`_.
+
+This script generates a `.clang_complete
+<https://github.com/Rip-Rip/clang_complete/blob/c7f5673a5d31704e9ec43d43c0606b243d5ef623/doc/clang_complete.txt#L59-L87>`_
+configuration file.
+
+Usage::
+
+  make CC='~/.vim/bin/cc_args.py gcc' CXX='~/.vim/bin/cc_args.py g++' -B
+
+
+gccrec
+------
+
+The ``gccrec`` tool from the now unmaintained `gccsense
+<https://github.com/m2ym/gccsense>`_ project.
+
+The tool records the compile options in an SQLite database.
+
+Links to the manual for reference:
+
+* `txt <https://github.com/m2ym/gccsense/blob/67c76de401b3d11ccbba0e6d782c8686a341aabf/doc/manual.txt#L205-L252>`_
+* `HTML <https://web.archive.org/web/20150223192059/http://cx4a.org/software/gccsense/manual.html#gccrec>`_
+
+
+rtags
+-----
+
+The rtags_ project has a gcc wrapper named ``gcc-rtags-wrapper.sh``
+to help feed its internal compilation database.
+
+Description here:
+
+* https://github.com/Andersbakken/rtags/#setup
 
 
 YCM-Generator
@@ -316,6 +330,7 @@ because the fake toolchain is composed of trivial programs.
 The tool does not actually generate a "JSON Compilation Database",
 instead it creates a configuration file for YouCompleteMe_.
 
+
 Case studies on a few open source projects
 ==========================================
 
@@ -326,13 +341,11 @@ the method to generate a compilation database can differ.
 
 The result should preferrably be:
 
-* **correct**
-
+**correct**
   Some tools guess the compile options,
   if they guess wrong, the compile command entry is not useful.
 
-* **complete**
-
+**complete**
   A compilation database should be as exhaustive as possible.
   Any file on which a tool can be run on, need to have compile options.
 
@@ -341,8 +354,7 @@ The result should preferrably be:
   Or compile options for unit tests may not be available,
   if tests aren't built by default.
 
-* **fast**
-
+**fast**
   Between 2 or more correct and complete methods, one should favor the fastest.
 
   Tools that require a full project build to generate the database
