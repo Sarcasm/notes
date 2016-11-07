@@ -121,6 +121,8 @@ Other tools
 
 * Your your own tool based on Clang's LibTooling_.
 
+* `PVS-Studio on Linux <http://www.viva64.com/en/m/0036/>`_ [#pvs-studio-linux-compdb]_
+
 * `cc_driver.pl`_ from the `Mo' Static <http://btorpey.github.io/blog/2016/04/07/mo-static/>`_
   article.
 
@@ -390,6 +392,10 @@ With ``intercept-build``, replace the last line by::
 
   intercept-build make -j9
 
+
+.. rubric:: Footnotes
+
+.. [#pvs-studio-linux-compdb] http://www.viva64.com/en/b/0446/#ID0EEAAC
 
 
 .. _JSON Compilation Database: http://clang.llvm.org/docs/JSONCompilationDatabase.html
