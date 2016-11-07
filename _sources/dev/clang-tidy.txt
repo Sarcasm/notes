@@ -1,5 +1,11 @@
+
+**********
 Clang-Tidy
-==========
+**********
+
+.. contents::
+   :local:
+
 
 If you don't know what clang-tidy is, read the overview here:
 
@@ -87,8 +93,19 @@ To use ``clang-tidy`` on a C++ project, type::
   mkdir tidy-build
   cd tidy-build
   cmake -DCMAKE_CXX_CLANG_TIDY="clang-tidy;-header-filter=$(realpath ..)" ..
-  ninja
+  make
 
+.. todo::
+
+   * Check MSVC compability mode (clang-cl).
+
+     It may possible to work by using ``clang-cl`` compatible flags like this::
+
+       cmake -DCMAKE_CXX_CLANG_TIDY="clang-tidy;-header-filter=$(realpath ..);-fms-extensions;-fms-compatibility-version=19;-D_M_AMD64=100" ..
+
+     Idea from reddit/r/cpp:
+
+     * https://www.reddit.com/r/cpp/comments/5b397d/what_c_linter_do_you_use/d9lvjiv/
 
 .. rubric:: Footnotes
 
