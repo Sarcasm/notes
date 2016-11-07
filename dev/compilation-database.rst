@@ -96,6 +96,12 @@ With this, you can have features such as semantic code completion
 and on-the-fly syntax checking.
 
 
+Atom
+^^^^
+
+* https://github.com/AtomLinter/linter-clang
+
+
 GNU Emacs
 ^^^^^^^^^
 
