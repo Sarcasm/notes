@@ -125,6 +125,9 @@ Other tools
 
 * With little effort the Kythe_ indexer can be run on a compilation database.
 
+* `Ericsson/codechecker <codechecker_>`_ generates
+  and uses compilation dabatases.
+
 * Your your own tool based on Clang's LibTooling_.
 
 * `PVS-Studio on Linux <http://www.viva64.com/en/m/0036/>`_ [#pvs-studio-linux-compdb]_
@@ -247,6 +250,45 @@ compdb
 
 compdb_ is a tool to manipulate compilation databases.
 It can generate a compilation database for header files.
+
+
+CodeChecker log
+^^^^^^^^^^^^^^^
+
+The `ld logger`_ tool from codechecker_
+has an implementation of a build interceptor
+similar to `bear and intercept-build`_.
+
+They favor ``intercept-build`` [#codechecker-intercept-build]_ when available,
+but fallback to the `ld logger`_ tool when needed.
+
+The ld logger tool can be invoked with a build command,
+for example::
+
+  CodeChecker log -o compile_commands.json -b "make -B"
+
+Howewer, in version 5.6, the resulting compilation database is surprising:
+
+- Escaping of double quotes is not handled properly,
+  for example it produces::
+
+    -DIRONY_PACKAGE_VERSION=\"0.2.2-cvs\"
+
+  instead of::
+
+    -DIRONY_PACKAGE_VERSION=\\\"0.2.2-cvs\\\"
+
+- There are compile commands not only for the compilation step,
+  but also for linking::
+
+    {
+            "directory": "/home/user/build-irony/src",
+            "command": "c++ -I<...> ...Irony.cpp.o ...main.cpp.o -o ...irony-server <ldflags...>",
+            "file": "/home/user/build-irony/srcCMakeFiles/irony-server.dir/Irony.cpp.o"
+    }
+
+
+Luckily, with ``intercept-build``, these issues are fixed.
 
 
 sw-btrace
@@ -402,6 +444,7 @@ With ``intercept-build``, replace the last line by::
 .. rubric:: Footnotes
 
 .. [#pvs-studio-linux-compdb] http://www.viva64.com/en/b/0446/#ID0EEAAC
+.. [#codechecker-intercept-build] https://github.com/Ericsson/codechecker/blob/a83bcfde83c432b9b7ef5e99fae1745c91015fec/codechecker_lib/build_manager.py#L66-L85
 
 
 .. _JSON Compilation Database: http://clang.llvm.org/docs/JSONCompilationDatabase.html
@@ -421,6 +464,8 @@ With ``intercept-build``, replace the last line by::
 .. _scan-build: https://github.com/rizsotto/scan-build
 .. _László Nagy: https://github.com/rizsotto
 .. _pip: https://pip.pypa.io/en/stable/
+.. _codechecker: https://github.com/Ericsson/codechecker
+.. _ld logger: https://github.com/Ericsson/codechecker/tree/5ae34cf9f234225852debd3022afac2abadc9a64/external-source-deps/build-logger
 .. _YCM-Generator: https://github.com/rdnetto/YCM-Generator
 .. _YouCompleteMe: https://github.com/Valloric/YouCompleteMe
 .. _rtags: https://github.com/Andersbakken/rtags
