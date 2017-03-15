@@ -7,4 +7,5 @@ Stuff related to programming and programmer tooling.
    :maxdepth: 2
 
    clang-tidy
+   compdb
    compilation-database
