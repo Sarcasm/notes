@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>compdb &#8212; Sarcasm notebook</title>
+    
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Compilation database" href="compilation-database.html" />
+    <link rel="prev" title="Clang-Tidy" href="clang-tidy.html" /> 
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
+          <span>Sarcasm notebook</span></a></h1>
+        <h2 class="heading"><span>compdb</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="clang-tidy.html">Clang-Tidy</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="compilation-database.html">Compilation database</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="compdb">
+<h1>compdb<a class="headerlink" href="#compdb" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#release-procedure" id="id1">Release procedure</a><ul>
+<li><a class="reference internal" href="#increment-version" id="id2">Increment version</a></li>
+<li><a class="reference internal" href="#run-tests" id="id3">Run tests</a></li>
+<li><a class="reference internal" href="#make-git-tag" id="id4">Make git tag</a></li>
+<li><a class="reference internal" href="#publish-on-pypi" id="id5">Publish on Pypi</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="release-procedure">
+<h2><a class="toc-backref" href="#id1">Release procedure</a><a class="headerlink" href="#release-procedure" title="Permalink to this headline">¶</a></h2>
+<p>Clone latest Github release to a new <code class="docutils literal"><span class="pre">compdb-dist</span></code> directory:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">Sarcasm</span><span class="o">/</span><span class="n">compdb</span><span class="o">.</span><span class="n">git</span> <span class="n">compdb</span><span class="o">-</span><span class="n">dist</span>
+<span class="n">cd</span> <span class="n">compdb</span><span class="o">-</span><span class="n">dist</span>
+</pre></div>
+</div>
+<div class="section" id="increment-version">
+<h3><a class="toc-backref" href="#id2">Increment version</a><a class="headerlink" href="#increment-version" title="Permalink to this headline">¶</a></h3>
+<p>Increment version in <code class="docutils literal"><span class="pre">compdb/__about__.py</span></code>.</p>
+</div>
+<div class="section" id="run-tests">
+<h3><a class="toc-backref" href="#id3">Run tests</a><a class="headerlink" href="#run-tests" title="Permalink to this headline">¶</a></h3>
+<p>Run test suite:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tox</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">missing</span><span class="o">-</span><span class="n">interpreters</span>
+</pre></div>
+</div>
+<p>README validation for PyPI:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">long</span><span class="o">-</span><span class="n">description</span> <span class="o">|</span> <span class="n">rst2html</span><span class="o">.</span><span class="n">py</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">output</span><span class="o">.</span><span class="n">html</span>
+<span class="n">chromium</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">output</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>Install locally for following tests:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virtualenv</span> <span class="o">.</span><span class="n">venv</span>
+<span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>Regression tests:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">cd</span> <span class="n">tests</span><span class="o">/</span><span class="n">regression</span><span class="o">/</span><span class="n">headerdb</span>
+<span class="n">make</span> <span class="nb">all</span>
+</pre></div>
+</div>
+<p>Contrib scripts:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="o">./</span><span class="n">contrib</span><span class="o">/</span><span class="n">zsh</span><span class="o">/</span><span class="n">check</span><span class="o">-</span><span class="nb">all</span><span class="o">-</span><span class="n">helps</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="make-git-tag">
+<h3><a class="toc-backref" href="#id4">Make git tag</a><a class="headerlink" href="#make-git-tag" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">COMPDB_VERSION</span><span class="o">=</span><span class="k">$(</span>python compdb version --short<span class="k">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;tagging </span><span class="nv">$COMPDB_VERSION</span><span class="s2">&quot;</span>
+git tag -a v<span class="nv">$COMPDB_VERSION</span> -m <span class="s2">&quot;compdb </span><span class="nv">$COMPDB_VERSION</span><span class="s2">&quot;</span>
+git push --follow-tags
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul class="simple">
+<li>Use annotated tags, lightweight tags aren&#8217;t appropriate for releases,
+they are for local development.
+Annotated tags can have author, date and message.
+They are shown by default when using <code class="docutils literal"><span class="pre">git</span> <span class="pre">describe</span></code>,
+that is not the case for lightweight tags.
+However, regarding the message, it seems a bit useful,
+at least the way it is used by many projects in the wild:
+&#8220;version X.Y.Z&#8221;, &#8220;project X.Y.Z&#8221;, &#8220;X.Y.Z&#8221;, ...
+It could make sense to use an empty message <code class="docutils literal"><span class="pre">-m</span> <span class="pre">''</span></code>.
+Alternatively they could be use to contain the release notes
+but there are no official format (e.g. Markdown),
+so this may better be in the project&#8217;s documentation.
+On Github, release notes, have to be written manually anyway:<ul>
+<li><a class="reference external" href="https://github.com/Sarcasm/compdb/releases">https://github.com/Sarcasm/compdb/releases</a></li>
+</ul>
+</li>
+<li>Using <code class="docutils literal"><span class="pre">--follow-tags</span></code> will only push annotated tags,
+that are reacheable (an ancestor) from the pushed commits.</li>
+<li>Potential improvement, sign releases:<ul>
+<li><a class="reference external" href="https://github.com/flycheck/flycheck/blob/424a78328518e1dabf830f792ce9c4aa1ff7fc7e/doc/contributor/maintaining.rst#signatures-for-commits-and-tags">https://github.com/flycheck/flycheck/blob/424a78328518e1dabf830f792ce9c4aa1ff7fc7e/doc/contributor/maintaining.rst#signatures-for-commits-and-tags</a></li>
+</ul>
+</li>
+</ul>
+<p>Make pretty release note on Github release page:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/Sarcasm/compdb/releases/">https://github.com/Sarcasm/compdb/releases/</a></li>
+</ul>
+</div>
+<div class="section" id="publish-on-pypi">
+<h3><a class="toc-backref" href="#id5">Publish on Pypi</a><a class="headerlink" href="#publish-on-pypi" title="Permalink to this headline">¶</a></h3>
+<p>One time configuration,
+steps to do again only if the release environment changes.</p>
+<p>Create a <code class="docutils literal"><span class="pre">~/.pypirc</span></code> with this content:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[distutils]</span>
+<span class="na">index-servers</span><span class="o">=</span><span class="s">pypi</span>
+
+<span class="k">[pypi]</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">Sarcasm</span>
+<span class="na">EOF</span>
+</pre></div>
+</div>
+<p>Install dependencies:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">wheel</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">twine</span>
+</pre></div>
+</div>
+<p>Build the distribution:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="n">bdist_wheel</span>
+<span class="n">twine</span> <span class="n">upload</span> <span class="n">dist</span><span class="o">/*</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="clang-tidy.html">Clang-Tidy</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="compilation-database.html">Compilation database</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Guillaume Papin.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
+    </div>
+  </body>
+</html>
