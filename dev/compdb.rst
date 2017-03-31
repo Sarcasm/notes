@@ -43,8 +43,10 @@ Install locally for following tests::
 Regression tests::
 
   source .venv/bin/activate
-  cd tests/regression/headerdb
+  pushd tests/regression/headerdb
+  make clean
   make all
+  popd
 
 Contrib scripts::
 
@@ -110,13 +112,38 @@ Create a ``~/.pypirc`` with this content:
   EOF
 
 
-Install dependencies::
+Build the distributions.
 
-  source .venv/bin/activate
+We cannot use an `Universal Wheel <https://packaging.python.org/distributing/#universal-wheels>`_
+because Python 2 depends on ``configparser`` as an external library while Python 3 doesn't.
+See:
+
+- https://github.com/Sarcasm/compdb/blob/829a1ff05058933b9613d3b96046b74db57f9cac/setup.py#L20-L24
+- `[GH-1] <https://github.com/Sarcasm/compdb/issues/1>`_
+
+Make sure to remove any resident packages::
+
+   rm -rf dist/*
+
+Build Python 2 package::
+
+  virtualenv -p python2 .venv2
+  source .venv2/bin/activate
   pip install wheel
+  python2 setup.py sdist bdist_wheel
+  deactivate
+
+Build Python 3 package::
+
+  virtualenv .venv3
+  source .venv3/bin/activate
+  pip install wheel
+  python3 setup.py sdist bdist_wheel
+  deactivate
+
+Upload packages::
+
+  virtualenv .venv
+  source .venv/bin/activate
   pip install twine
-
-Build the distribution::
-
-  python setup.py sdist bdist_wheel
   twine upload dist/*
