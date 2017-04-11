@@ -13,7 +13,7 @@ If you don't know what clang-tidy is, read the overview here:
 
 
 Identifier naming
------------------
+=================
 
 The readability-identifier-naming_ check ensures the identifiers matches the
 coding style of the project.
@@ -66,7 +66,7 @@ Here is a self-contained example to try ``clang-tidy`` out::
       test.cpp -- -std=c++11
 
 See also
-~~~~~~~~
+--------
 
 * List of available identifiers:
   `clang-tidy/readability/IdentifierNamingCheck.cpp
@@ -74,7 +74,7 @@ See also
 
 
 CMake integration
------------------
+=================
 
 Since CMake 3.6 [#cmake-3.6-release]_,
 it is possible to run ``clang-tidy`` as a part of the build.
@@ -92,8 +92,40 @@ To use ``clang-tidy`` on a C++ project, type::
 
   mkdir tidy-build
   cd tidy-build
-  cmake -DCMAKE_CXX_CLANG_TIDY="clang-tidy;-header-filter=$(realpath ..)" ..
-  make
+  CC=clang CXX=clang++ cmake \
+      -DCMAKE_CXX_CLANG_TIDY="clang-tidy;-warnings-as-errors=*;-header-filter=$(realpath ..)" \
+      ..
+  make -k
+
+This invocation is made uses ``-warnings-as-errors=*``,
+this can be useful for continuous integration systems.
+The return code of ``clang-tidy`` is handled
+since CMake 3.8 [#cmake-3.8-release]_,
+so this won't work with the CMake 3.6 and 3.7 series.
+
+
+What's wrong with the CMake integration?
+----------------------------------------
+
+- Constant overhead for compilation in developement.
+
+  For developement linting is nice before committing,
+  but not necessarily when iterating on the code.
+
+- If you want to modernize/fix your code,
+  you need another way to run clang-tidy anyway.
+
+  Clang has two scripts for example:
+
+  1. ``run-clang-tidy.py``: useful to run clang-tidy on a compilation database
+  2. ``clang-tidy-diff.py``: useful to run clang-tidy on a diff output
+
+  CMake is still useful to generate the compilation database the tool runs on.
+
+- No way to force colors.
+
+  This may actually be a missing feature in ``clang-tidy``,
+  which lacks something like ``-fdiagnostic-colors``.
 
 .. todo::
 
@@ -110,3 +142,4 @@ To use ``clang-tidy`` on a C++ project, type::
 .. rubric:: Footnotes
 
 .. [#cmake-3.6-release] https://cmake.org/cmake/help/v3.6/release/3.6.html
+.. [#cmake-3.8-release] https://cmake.org/cmake/help/v3.8/release/3.8.html
