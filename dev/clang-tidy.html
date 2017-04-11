@@ -53,11 +53,14 @@
 <h1>Clang-Tidy<a class="headerlink" href="#clang-tidy" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#identifier-naming" id="id2">Identifier naming</a><ul>
-<li><a class="reference internal" href="#see-also" id="id3">See also</a></li>
+<li><a class="reference internal" href="#identifier-naming" id="id3">Identifier naming</a><ul>
+<li><a class="reference internal" href="#see-also" id="id4">See also</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#cmake-integration" id="id4">CMake integration</a></li>
+<li><a class="reference internal" href="#cmake-integration" id="id5">CMake integration</a><ul>
+<li><a class="reference internal" href="#what-s-wrong-with-the-cmake-integration" id="id6">What&#8217;s wrong with the CMake integration?</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <p>If you don&#8217;t know what clang-tidy is, read the overview here:</p>
@@ -65,7 +68,7 @@
 <li><a class="reference external" href="http://clang.llvm.org/extra/clang-tidy/">http://clang.llvm.org/extra/clang-tidy/</a></li>
 </ul>
 <div class="section" id="identifier-naming">
-<h2><a class="toc-backref" href="#id2">Identifier naming</a><a class="headerlink" href="#identifier-naming" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3">Identifier naming</a><a class="headerlink" href="#identifier-naming" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference external" href="http://clang.llvm.org/extra/clang-tidy/checks/readability-identifier-naming.html">readability-identifier-naming</a> check ensures the identifiers matches the
 coding style of the project.
 The naming convention can be specified in the <code class="docutils literal"><span class="pre">.clang-tidy</span></code> configuration
@@ -109,7 +112,7 @@ private members start with <code class="docutils literal"><span class="pre">m_</
 </pre></div>
 </div>
 <div class="section" id="see-also">
-<h3><a class="toc-backref" href="#id3">See also</a><a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id4">See also</a><a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>List of available identifiers:
 <a class="reference external" href="https://github.com/llvm-mirror/clang-tools-extra/blob/8eb332109a2c68f791eda33fe28f174e77bbc5fe/clang-tidy/readability/IdentifierNamingCheck.cpp#L66">clang-tidy/readability/IdentifierNamingCheck.cpp</a></li>
@@ -117,7 +120,7 @@ private members start with <code class="docutils literal"><span class="pre">m_</
 </div>
 </div>
 <div class="section" id="cmake-integration">
-<h2><a class="toc-backref" href="#id4">CMake integration</a><a class="headerlink" href="#cmake-integration" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">CMake integration</a><a class="headerlink" href="#cmake-integration" title="Permalink to this headline">¶</a></h2>
 <p>Since CMake 3.6 <a class="footnote-reference" href="#cmake-3-6-release" id="id1">[1]</a>,
 it is possible to run <code class="docutils literal"><span class="pre">clang-tidy</span></code> as a part of the build.
 This can be done on a per-target basis,
@@ -129,10 +132,38 @@ each argument separated by <code class="docutils literal"><span class="pre">;</s
 <p>To use <code class="docutils literal"><span class="pre">clang-tidy</span></code> on a C++ project, type:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">tidy</span><span class="o">-</span><span class="n">build</span>
 <span class="n">cd</span> <span class="n">tidy</span><span class="o">-</span><span class="n">build</span>
-<span class="n">cmake</span> <span class="o">-</span><span class="n">DCMAKE_CXX_CLANG_TIDY</span><span class="o">=</span><span class="s2">&quot;clang-tidy;-header-filter=$(realpath ..)&quot;</span> <span class="o">..</span>
-<span class="n">make</span>
+<span class="n">CC</span><span class="o">=</span><span class="n">clang</span> <span class="n">CXX</span><span class="o">=</span><span class="n">clang</span><span class="o">++</span> <span class="n">cmake</span> \
+    <span class="o">-</span><span class="n">DCMAKE_CXX_CLANG_TIDY</span><span class="o">=</span><span class="s2">&quot;clang-tidy;-warnings-as-errors=*;-header-filter=$(realpath ..)&quot;</span> \
+    <span class="o">..</span>
+<span class="n">make</span> <span class="o">-</span><span class="n">k</span>
 </pre></div>
 </div>
+<p>This invocation is made uses <code class="docutils literal"><span class="pre">-warnings-as-errors=*</span></code>,
+this can be useful for continuous integration systems.
+The return code of <code class="docutils literal"><span class="pre">clang-tidy</span></code> is handled
+since CMake 3.8 <a class="footnote-reference" href="#cmake-3-8-release" id="id2">[2]</a>,
+so this won&#8217;t work with the CMake 3.6 and 3.7 series.</p>
+<div class="section" id="what-s-wrong-with-the-cmake-integration">
+<h3><a class="toc-backref" href="#id6">What&#8217;s wrong with the CMake integration?</a><a class="headerlink" href="#what-s-wrong-with-the-cmake-integration" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Constant overhead for compilation in developement.</p>
+<p>For developement linting is nice before committing,
+but not necessarily when iterating on the code.</p>
+</li>
+<li><p class="first">If you want to modernize/fix your code,
+you need another way to run clang-tidy anyway.</p>
+<p>Clang has two scripts for example:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal"><span class="pre">run-clang-tidy.py</span></code>: useful to run clang-tidy on a compilation database</li>
+<li><code class="docutils literal"><span class="pre">clang-tidy-diff.py</span></code>: useful to run clang-tidy on a diff output</li>
+</ol>
+<p>CMake is still useful to generate the compilation database the tool runs on.</p>
+</li>
+<li><p class="first">No way to force colors.</p>
+<p>This may actually be a missing feature in <code class="docutils literal"><span class="pre">clang-tidy</span></code>,
+which lacks something like <code class="docutils literal"><span class="pre">-fdiagnostic-colors</span></code>.</p>
+</li>
+</ul>
 <div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
 <ul class="last">
@@ -155,6 +186,13 @@ each argument separated by <code class="docutils literal"><span class="pre">;</s
 <tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://cmake.org/cmake/help/v3.6/release/3.6.html">https://cmake.org/cmake/help/v3.6/release/3.6.html</a></td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="cmake-3-8-release" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://cmake.org/cmake/help/v3.8/release/3.8.html">https://cmake.org/cmake/help/v3.8/release/3.8.html</a></td></tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 
@@ -174,7 +212,7 @@ each argument separated by <code class="docutils literal"><span class="pre">;</s
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, Guillaume Papin.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.4.
     </div>
   </body>
 </html>
