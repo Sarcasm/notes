@@ -36,21 +36,27 @@ README validation for PyPI::
 
 Install locally for following tests::
 
-  virtualenv .venv
-  source .venv/bin/activate
+  rm -rf .venv-release
+  virtualenv .venv-release
+  source .venv-release/bin/activate
   pip install -r requirements.txt
 
 Regression tests::
 
-  source .venv/bin/activate
+  source .venv-release/bin/activate
   pushd tests/regression/headerdb
   make clean
   make all
   popd
 
+Packaging tests (requires Docker)::
+
+  ./tests/integration/docker/ubuntu-trusty.sh \
+      tests/integration/packaging-trusty.sh
+
 Contrib scripts::
 
-  source .venv/bin/activate
+  source .venv-release/bin/activate
   ./contrib/zsh/check-all-helps
 
 
@@ -112,38 +118,18 @@ Create a ``~/.pypirc`` with this content:
   EOF
 
 
-Build the distributions.
-
-We cannot use an `Universal Wheel <https://packaging.python.org/distributing/#universal-wheels>`_
-because Python 2 depends on ``configparser`` as an external library while Python 3 doesn't.
-See:
-
-- https://github.com/Sarcasm/compdb/blob/829a1ff05058933b9613d3b96046b74db57f9cac/setup.py#L20-L24
-- `[GH-1] <https://github.com/Sarcasm/compdb/issues/1>`_
-
 Make sure to remove any resident packages::
 
    rm -rf dist/*
 
-Build Python 2 package::
+Build source distribution and universal wheel::
 
-  virtualenv -p python2 .venv2
-  source .venv2/bin/activate
+  source .venv-release/bin/activate
   pip install wheel
-  python2 setup.py sdist bdist_wheel
-  deactivate
-
-Build Python 3 package::
-
-  virtualenv .venv3
-  source .venv3/bin/activate
-  pip install wheel
-  python3 setup.py sdist bdist_wheel
-  deactivate
+  python setup.py sdist bdist_wheel
 
 Upload packages::
 
-  virtualenv .venv
-  source .venv/bin/activate
+  source .venv-release/bin/activate
   pip install twine
   twine upload dist/*

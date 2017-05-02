@@ -85,21 +85,27 @@
 </pre></div>
 </div>
 <p>Install locally for following tests:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virtualenv</span> <span class="o">.</span><span class="n">venv</span>
-<span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">.</span><span class="n">venv</span><span class="o">-</span><span class="n">release</span>
+<span class="n">virtualenv</span> <span class="o">.</span><span class="n">venv</span><span class="o">-</span><span class="n">release</span>
+<span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">-</span><span class="n">release</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>Regression tests:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">-</span><span class="n">release</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 <span class="n">pushd</span> <span class="n">tests</span><span class="o">/</span><span class="n">regression</span><span class="o">/</span><span class="n">headerdb</span>
 <span class="n">make</span> <span class="n">clean</span>
 <span class="n">make</span> <span class="nb">all</span>
 <span class="n">popd</span>
 </pre></div>
 </div>
+<p>Packaging tests (requires Docker):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">tests</span><span class="o">/</span><span class="n">integration</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">-</span><span class="n">trusty</span><span class="o">.</span><span class="n">sh</span> \
+    <span class="n">tests</span><span class="o">/</span><span class="n">integration</span><span class="o">/</span><span class="n">packaging</span><span class="o">-</span><span class="n">trusty</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
 <p>Contrib scripts:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">-</span><span class="n">release</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 <span class="o">./</span><span class="n">contrib</span><span class="o">/</span><span class="n">zsh</span><span class="o">/</span><span class="n">check</span><span class="o">-</span><span class="nb">all</span><span class="o">-</span><span class="n">helps</span>
 </pre></div>
 </div>
@@ -155,37 +161,18 @@ steps to do again only if the release environment changes.</p>
 <span class="na">EOF</span>
 </pre></div>
 </div>
-<p>Build the distributions.</p>
-<p>We cannot use an <a class="reference external" href="https://packaging.python.org/distributing/#universal-wheels">Universal Wheel</a>
-because Python 2 depends on <code class="docutils literal"><span class="pre">configparser</span></code> as an external library while Python 3 doesn&#8217;t.
-See:</p>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/Sarcasm/compdb/blob/829a1ff05058933b9613d3b96046b74db57f9cac/setup.py#L20-L24">https://github.com/Sarcasm/compdb/blob/829a1ff05058933b9613d3b96046b74db57f9cac/setup.py#L20-L24</a></li>
-<li><a class="reference external" href="https://github.com/Sarcasm/compdb/issues/1">[GH-1]</a></li>
-</ul>
 <p>Make sure to remove any resident packages:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">dist</span><span class="o">/*</span>
 </pre></div>
 </div>
-<p>Build Python 2 package:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virtualenv</span> <span class="o">-</span><span class="n">p</span> <span class="n">python2</span> <span class="o">.</span><span class="n">venv2</span>
-<span class="n">source</span> <span class="o">.</span><span class="n">venv2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<p>Build source distribution and universal wheel:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">-</span><span class="n">release</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">wheel</span>
-<span class="n">python2</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="n">bdist_wheel</span>
-<span class="n">deactivate</span>
-</pre></div>
-</div>
-<p>Build Python 3 package:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virtualenv</span> <span class="o">.</span><span class="n">venv3</span>
-<span class="n">source</span> <span class="o">.</span><span class="n">venv3</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">wheel</span>
-<span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="n">bdist_wheel</span>
-<span class="n">deactivate</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="n">bdist_wheel</span>
 </pre></div>
 </div>
 <p>Upload packages:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virtualenv</span> <span class="o">.</span><span class="n">venv</span>
-<span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">-</span><span class="n">release</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">twine</span>
 <span class="n">twine</span> <span class="n">upload</span> <span class="n">dist</span><span class="o">/*</span>
 </pre></div>
