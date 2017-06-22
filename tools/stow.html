@@ -1,6 +1,6 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -24,13 +24,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="To do list" href="../todolist.html" />
     <link rel="prev" title="Tools" href="index.html" /> 
   </head>
-  <body role="document">
+  <body>
       <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
           <span>Sarcasm notebook</span></a></h1>
         <h2 class="heading"><span>GNU Stow</span></h2>
@@ -86,7 +86,7 @@ of a handful of open source projects I care about.</p>
 <h2><a class="toc-backref" href="#id3">Filesystem layout</a><a class="headerlink" href="#filesystem-layout" title="Permalink to this headline">¶</a></h2>
 <p>I install my packages in <code class="docutils literal"><span class="pre">~/pkg/stow/&lt;package[-version]&gt;</span></code>.</p>
 <p><code class="docutils literal"><span class="pre">~/pkg/bin</span></code> is added to the <code class="docutils literal"><span class="pre">PATH</span></code>,
-it precedes the system binaries&#8217; search paths.</p>
+it precedes the system binaries’ search paths.</p>
 <p><code class="docutils literal"><span class="pre">~/.profile</span></code> excerpt:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># User&#39;s Stow packages</span>
 <span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">d</span> <span class="s2">&quot;$HOME/pkg/bin&quot;</span> <span class="p">];</span> <span class="n">then</span>
@@ -190,7 +190,7 @@ stow ag-0.32.0
 <div class="section" id="emacs">
 <h3><a class="toc-backref" href="#id10">emacs</a><a class="headerlink" href="#emacs" title="Permalink to this headline">¶</a></h3>
 <p>Download: <a class="reference external" href="https://www.gnu.org/software/emacs/download.html">https://www.gnu.org/software/emacs/download.html</a></p>
-<p>I don&#8217;t think the instructions from the manual are still relevant,
+<p>I don’t think the instructions from the manual are still relevant,
 it seems they were written for Emacs 19.31,
 but it might be a good idea to check if that changed:</p>
 <ul>
@@ -199,7 +199,7 @@ but it might be a good idea to check if that changed:</p>
 tarballs are signed with the GPG key from Nicolas Petton <code class="docutils literal"><span class="pre">7C207910</span></code>,
 fingerpint <code class="docutils literal"><span class="pre">28D3</span> <span class="pre">BED8</span> <span class="pre">51FD</span> <span class="pre">F3AB</span> <span class="pre">57FE</span> <span class="pre">F93C</span> <span class="pre">2335</span> <span class="pre">87A4</span> <span class="pre">7C20</span> <span class="pre">7910</span></code>,
 which can be found in the GNU keyring.</p>
-<p>&#8211; <a class="reference external" href="https://www.gnu.org/software/emacs/download.html">https://www.gnu.org/software/emacs/download.html</a></p>
+<p>– <a class="reference external" href="https://www.gnu.org/software/emacs/download.html">https://www.gnu.org/software/emacs/download.html</a></p>
 </li>
 </ul>
 <p>Get GPG key:</p>
@@ -313,7 +313,7 @@ stow sourceweb
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, Guillaume Papin.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
     </div>
   </body>
 </html>

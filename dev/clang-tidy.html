@@ -1,6 +1,6 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -24,13 +24,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="compdb" href="compdb.html" />
     <link rel="prev" title="Development notes" href="index.html" /> 
   </head>
-  <body role="document">
+  <body>
       <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
           <span>Sarcasm notebook</span></a></h1>
         <h2 class="heading"><span>Clang-Tidy</span></h2>
@@ -58,12 +58,12 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#cmake-integration" id="id5">CMake integration</a><ul>
-<li><a class="reference internal" href="#what-s-wrong-with-the-cmake-integration" id="id6">What&#8217;s wrong with the CMake integration?</a></li>
+<li><a class="reference internal" href="#what-s-wrong-with-the-cmake-integration" id="id6">What’s wrong with the CMake integration?</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<p>If you don&#8217;t know what clang-tidy is, read the overview here:</p>
+<p>If you don’t know what clang-tidy is, read the overview here:</p>
 <ul class="simple">
 <li><a class="reference external" href="http://clang.llvm.org/extra/clang-tidy/">http://clang.llvm.org/extra/clang-tidy/</a></li>
 </ul>
@@ -124,7 +124,7 @@ private members start with <code class="docutils literal"><span class="pre">m_</
 <p>Since CMake 3.6 <a class="footnote-reference" href="#cmake-3-6-release" id="id1">[1]</a>,
 it is possible to run <code class="docutils literal"><span class="pre">clang-tidy</span></code> as a part of the build.
 This can be done on a per-target basis,
-but if you don&#8217;t want to modify the project&#8217;s <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code>,
+but if you don’t want to modify the project’s <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code>,
 it is possible to enable <code class="docutils literal"><span class="pre">clang-tidy</span></code> for the whole project
 by using the CMake variable <a class="reference external" href="https://cmake.org/cmake/help/latest/prop_tgt/LANG_CLANG_TIDY.html#prop_tgt:&lt;LANG&gt;_CLANG_TIDY">CMAKE_&lt;LANG&gt;_CLANG_TIDY</a>.</p>
 <p>Please note that, <code class="docutils literal"><span class="pre">clang-tidy</span></code> arguments should be a CMake list,
@@ -142,9 +142,9 @@ each argument separated by <code class="docutils literal"><span class="pre">;</s
 this can be useful for continuous integration systems.
 The return code of <code class="docutils literal"><span class="pre">clang-tidy</span></code> is handled
 since CMake 3.8 <a class="footnote-reference" href="#cmake-3-8-release" id="id2">[2]</a>,
-so this won&#8217;t work with the CMake 3.6 and 3.7 series.</p>
+so this won’t work with the CMake 3.6 and 3.7 series.</p>
 <div class="section" id="what-s-wrong-with-the-cmake-integration">
-<h3><a class="toc-backref" href="#id6">What&#8217;s wrong with the CMake integration?</a><a class="headerlink" href="#what-s-wrong-with-the-cmake-integration" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6">What’s wrong with the CMake integration?</a><a class="headerlink" href="#what-s-wrong-with-the-cmake-integration" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">Constant overhead for compilation in developement.</p>
 <p>For developement linting is nice before committing,
@@ -212,7 +212,7 @@ which lacks something like <code class="docutils literal"><span class="pre">-fdi
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, Guillaume Papin.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
     </div>
   </body>
 </html>

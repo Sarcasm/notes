@@ -1,6 +1,6 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -24,13 +24,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Compilation database" href="compilation-database.html" />
     <link rel="prev" title="Clang-Tidy" href="clang-tidy.html" /> 
   </head>
-  <body role="document">
+  <body>
       <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
           <span>Sarcasm notebook</span></a></h1>
         <h2 class="heading"><span>compdb</span></h2>
@@ -120,18 +120,18 @@ git push --follow-tags
 </div>
 <p>Notes:</p>
 <ul class="simple">
-<li>Use annotated tags, lightweight tags aren&#8217;t appropriate for releases,
+<li>Use annotated tags, lightweight tags aren’t appropriate for releases,
 they are for local development.
 Annotated tags can have author, date and message.
 They are shown by default when using <code class="docutils literal"><span class="pre">git</span> <span class="pre">describe</span></code>,
 that is not the case for lightweight tags.
 However, regarding the message, it seems a bit useful,
 at least the way it is used by many projects in the wild:
-&#8220;version X.Y.Z&#8221;, &#8220;project X.Y.Z&#8221;, &#8220;X.Y.Z&#8221;, ...
+“version X.Y.Z”, “project X.Y.Z”, “X.Y.Z”, …
 It could make sense to use an empty message <code class="docutils literal"><span class="pre">-m</span> <span class="pre">''</span></code>.
 Alternatively they could be use to contain the release notes
 but there are no official format (e.g. Markdown),
-so this may better be in the project&#8217;s documentation.
+so this may better be in the project’s documentation.
 On Github, release notes, have to be written manually anyway:<ul>
 <li><a class="reference external" href="https://github.com/Sarcasm/compdb/releases">https://github.com/Sarcasm/compdb/releases</a></li>
 </ul>
@@ -197,7 +197,7 @@ steps to do again only if the release environment changes.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, Guillaume Papin.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
     </div>
   </body>
 </html>
