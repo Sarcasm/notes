@@ -143,6 +143,8 @@ Other tools
 * `Ericsson/codechecker <codechecker_>`_ generates
   and uses compilation dabatases.
 
+* Include What You Use: https://github.com/include-what-you-use/include-what-you-use
+
 * OCLint: http://docs.oclint.org/en/stable/manual/oclint-json-compilation-database.html
 
 * With little effort the Kythe_ indexer can be run on a compilation database.
@@ -303,6 +305,19 @@ for the `JHBuild tool <https://developer.gnome.org/jhbuild/>`_.
 .. seealso::
 
    * https://christian.kellner.me/2017/03/28/emacs-as-c-ide-and-jhbuild/
+
+
+commands_to_compilation_database
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`commands_to_compilation_database <https://github.com/tee3/commands_to_compilation_database>`_
+can generate compilation databases for Boost.Build, ``make``,
+and a potentially other tools by mean of a regular expressions
+to match the build output.
+
+It also provides a tools to generate a compilation database
+from files specified to the standard input,
+and compile options specified on the command line.
 
 
 compdb
