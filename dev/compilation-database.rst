@@ -158,6 +158,8 @@ Other tools
 * `cc_driver.pl`_ from the `Mo' Static <http://btorpey.github.io/blog/2016/04/07/mo-static/>`_
   article.
 
+* `Sourcetrail <https://www.sourcetrail.com>`_
+
 .. seealso::
 
    Some of the tools listed here:
@@ -177,6 +179,14 @@ Build systems and compilers
 
 This section describes build tools which natively support
 the generation of a compilation database.
+
+Bazel
+^^^^^
+
+Google/Kythe as an experimental_action_listener to produce a compilation database.
+
+- `github.com/google/kythe: tools/cpp/generate_compilation_database.sh <https://github.com/google/kythe/blob/cb58e9b4b5ee911db9495b382c9fe50e936f2bb3/tools/cpp/generate_compilation_database.sh>`_
+
 
 Clang
 ^^^^^
@@ -249,6 +259,18 @@ there is an issue on the ninja bug tracker with an associated pull request:
 
 * https://github.com/ninja-build/ninja/issues/1024
 * https://github.com/ninja-build/ninja/pull/1025
+
+
+waf
+^^^
+
+waf_ supports the generation of a JSON Compilation database by adding the
+following lines to the wfscript::
+
+  def configure(conf):
+      conf.load('compiler_cxx')
+      ...
+      conf.load('clang_compilation_database')
 
 
 Specialized tools
@@ -366,6 +388,14 @@ Howewer, in version 5.6, the resulting compilation database is surprising:
 Luckily, with ``intercept-build``, these issues are fixed.
 
 
+Sourcetrail Extension for Visual Studio
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The `Sourcetrail Extension`_ for Visual Studio is a GUI tool that generates
+JSON Compilation Databases from VS Solutions.
+A wide range of VS versions seems to be supported.
+
+
 sw-btrace
 ^^^^^^^^^
 
@@ -441,7 +471,8 @@ to help feed its internal compilation database.
 
 Description here:
 
-* https://github.com/Andersbakken/rtags/#setup
+* fixed link: https://github.com/Andersbakken/rtags/tree/499db6f98cc725bca66d122bce571adcdfa32187#setup
+* latest: https://github.com/Andersbakken/rtags/#setup
 
 
 YCM-Generator
@@ -545,6 +576,7 @@ With ``intercept-build``, replace the last line by::
 .. _YouCompleteMe: https://github.com/Valloric/YouCompleteMe
 .. _rtags: https://github.com/Andersbakken/rtags
 .. _sourceweb: https://github.com/rprichard/sourceweb
+.. _Sourcetrail Extension: https://marketplace.visualstudio.com/items?itemName=vs-publisher-1208751.SourcetrailExtensino
 .. _btrace: https://github.com/rprichard/sourceweb#btrace
 .. _xcpretty: https://github.com/supermarin/xcpretty
 .. _compdb: https://github.com/Sarcasm/compdb
