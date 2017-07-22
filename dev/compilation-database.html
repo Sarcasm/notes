@@ -67,32 +67,35 @@
 </li>
 <li><a class="reference internal" href="#how-to-generate-a-json-compilation-database" id="id21">How to generate a JSON Compilation Database?</a><ul>
 <li><a class="reference internal" href="#build-systems-and-compilers" id="id22">Build systems and compilers</a><ul>
-<li><a class="reference internal" href="#clang" id="id23">Clang</a></li>
-<li><a class="reference internal" href="#cmake" id="id24">CMake</a></li>
-<li><a class="reference internal" href="#ninja" id="id25">Ninja</a></li>
+<li><a class="reference internal" href="#bazel" id="id23">Bazel</a></li>
+<li><a class="reference internal" href="#clang" id="id24">Clang</a></li>
+<li><a class="reference internal" href="#cmake" id="id25">CMake</a></li>
+<li><a class="reference internal" href="#ninja" id="id26">Ninja</a></li>
+<li><a class="reference internal" href="#waf" id="id27">waf</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#specialized-tools" id="id26">Specialized tools</a><ul>
-<li><a class="reference internal" href="#bear-and-intercept-build" id="id27">bear and intercept-build</a></li>
-<li><a class="reference internal" href="#cdcd" id="id28">cdcd</a></li>
-<li><a class="reference internal" href="#commands-to-compilation-database" id="id29">commands_to_compilation_database</a></li>
-<li><a class="reference internal" href="#compdb" id="id30">compdb</a></li>
-<li><a class="reference internal" href="#codechecker-log" id="id31">CodeChecker log</a></li>
-<li><a class="reference internal" href="#sw-btrace" id="id32">sw-btrace</a></li>
-<li><a class="reference internal" href="#xcpretty" id="id33">xcpretty</a></li>
+<li><a class="reference internal" href="#specialized-tools" id="id28">Specialized tools</a><ul>
+<li><a class="reference internal" href="#bear-and-intercept-build" id="id29">bear and intercept-build</a></li>
+<li><a class="reference internal" href="#cdcd" id="id30">cdcd</a></li>
+<li><a class="reference internal" href="#compdb" id="id31">compdb</a></li>
+<li><a class="reference internal" href="#codechecker-log" id="id32">CodeChecker log</a></li>
+<li><a class="reference internal" href="#sourcetrail-extension-for-visual-studio" id="id33">Sourcetrail Extension for Visual Studio</a></li>
+<li><a class="reference internal" href="#sw-btrace" id="id34">sw-btrace</a></li>
+<li><a class="reference internal" href="#tee3-commands-to-compilation-database" id="id35">tee3/commands_to_compilation_database</a></li>
+<li><a class="reference internal" href="#xcpretty" id="id36">xcpretty</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#other-compilation-databases-and-tools" id="id34">Other compilation databases and tools</a><ul>
-<li><a class="reference internal" href="#cc-args-py" id="id35">cc_args.py</a></li>
-<li><a class="reference internal" href="#gccrec" id="id36">gccrec</a></li>
-<li><a class="reference internal" href="#rtags" id="id37">rtags</a></li>
-<li><a class="reference internal" href="#ycm-generator" id="id38">YCM-Generator</a></li>
+<li><a class="reference internal" href="#other-compilation-databases-and-tools" id="id37">Other compilation databases and tools</a><ul>
+<li><a class="reference internal" href="#cc-args-py" id="id38">cc_args.py</a></li>
+<li><a class="reference internal" href="#gccrec" id="id39">gccrec</a></li>
+<li><a class="reference internal" href="#rtags" id="id40">rtags</a></li>
+<li><a class="reference internal" href="#ycm-generator" id="id41">YCM-Generator</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#case-studies-on-a-few-open-source-projects" id="id39">Case studies on a few open source projects</a><ul>
-<li><a class="reference internal" href="#git" id="id40">git</a></li>
+<li><a class="reference internal" href="#case-studies-on-a-few-open-source-projects" id="id42">Case studies on a few open source projects</a><ul>
+<li><a class="reference internal" href="#git" id="id43">git</a></li>
 </ul>
 </li>
 </ul>
@@ -229,6 +232,7 @@ and uses compilation dabatases.</li>
 <li><a class="reference external" href="http://www.viva64.com/en/m/0036/">PVS-Studio on Linux</a> <a class="footnote-reference" href="#pvs-studio-linux-compdb" id="id1">[1]</a></li>
 <li><a class="reference external" href="http://btorpey.github.io/pages/cc_driver.pl/index.html">cc_driver.pl</a> from the <a class="reference external" href="http://btorpey.github.io/blog/2016/04/07/mo-static/">Mo’ Static</a>
 article.</li>
+<li><a class="reference external" href="https://www.sourcetrail.com">Sourcetrail</a></li>
 </ul>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
@@ -243,30 +247,40 @@ article.</li>
 <h2><a class="toc-backref" href="#id21">How to generate a JSON Compilation Database?</a><a class="headerlink" href="#how-to-generate-a-json-compilation-database" title="Permalink to this headline">¶</a></h2>
 <div class="contents local topic" id="id2">
 <ul class="simple">
-<li><a class="reference internal" href="#build-systems-and-compilers" id="id41">Build systems and compilers</a><ul>
-<li><a class="reference internal" href="#clang" id="id42">Clang</a></li>
-<li><a class="reference internal" href="#cmake" id="id43">CMake</a></li>
-<li><a class="reference internal" href="#ninja" id="id44">Ninja</a></li>
+<li><a class="reference internal" href="#build-systems-and-compilers" id="id44">Build systems and compilers</a><ul>
+<li><a class="reference internal" href="#bazel" id="id45">Bazel</a></li>
+<li><a class="reference internal" href="#clang" id="id46">Clang</a></li>
+<li><a class="reference internal" href="#cmake" id="id47">CMake</a></li>
+<li><a class="reference internal" href="#ninja" id="id48">Ninja</a></li>
+<li><a class="reference internal" href="#waf" id="id49">waf</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#specialized-tools" id="id45">Specialized tools</a><ul>
-<li><a class="reference internal" href="#bear-and-intercept-build" id="id46">bear and intercept-build</a></li>
-<li><a class="reference internal" href="#cdcd" id="id47">cdcd</a></li>
-<li><a class="reference internal" href="#commands-to-compilation-database" id="id48">commands_to_compilation_database</a></li>
-<li><a class="reference internal" href="#compdb" id="id49">compdb</a></li>
-<li><a class="reference internal" href="#codechecker-log" id="id50">CodeChecker log</a></li>
-<li><a class="reference internal" href="#sw-btrace" id="id51">sw-btrace</a></li>
-<li><a class="reference internal" href="#xcpretty" id="id52">xcpretty</a></li>
+<li><a class="reference internal" href="#specialized-tools" id="id50">Specialized tools</a><ul>
+<li><a class="reference internal" href="#bear-and-intercept-build" id="id51">bear and intercept-build</a></li>
+<li><a class="reference internal" href="#cdcd" id="id52">cdcd</a></li>
+<li><a class="reference internal" href="#compdb" id="id53">compdb</a></li>
+<li><a class="reference internal" href="#codechecker-log" id="id54">CodeChecker log</a></li>
+<li><a class="reference internal" href="#sourcetrail-extension-for-visual-studio" id="id55">Sourcetrail Extension for Visual Studio</a></li>
+<li><a class="reference internal" href="#sw-btrace" id="id56">sw-btrace</a></li>
+<li><a class="reference internal" href="#tee3-commands-to-compilation-database" id="id57">tee3/commands_to_compilation_database</a></li>
+<li><a class="reference internal" href="#xcpretty" id="id58">xcpretty</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="build-systems-and-compilers">
-<h3><a class="toc-backref" href="#id41">Build systems and compilers</a><a class="headerlink" href="#build-systems-and-compilers" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id44">Build systems and compilers</a><a class="headerlink" href="#build-systems-and-compilers" title="Permalink to this headline">¶</a></h3>
 <p>This section describes build tools which natively support
 the generation of a compilation database.</p>
+<div class="section" id="bazel">
+<h4><a class="toc-backref" href="#id45">Bazel</a><a class="headerlink" href="#bazel" title="Permalink to this headline">¶</a></h4>
+<p>Google/Kythe as an experimental_action_listener to produce a compilation database.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/google/kythe/blob/cb58e9b4b5ee911db9495b382c9fe50e936f2bb3/tools/cpp/generate_compilation_database.sh">github.com/google/kythe: tools/cpp/generate_compilation_database.sh</a></li>
+</ul>
+</div>
 <div class="section" id="clang">
-<h4><a class="toc-backref" href="#id42">Clang</a><a class="headerlink" href="#clang" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id46">Clang</a><a class="headerlink" href="#clang" title="Permalink to this headline">¶</a></h4>
 <p>Clang’s <a class="reference external" href="https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-mj">-MJ option</a>
 generates a compilation database entry per input (requires <code class="docutils literal"><span class="pre">Clang</span> <span class="pre">&gt;=</span> <span class="pre">5.0</span></code>).</p>
 <p>Usage:</p>
@@ -288,7 +302,7 @@ it is possible to use sed:</p>
 </ul>
 </div>
 <div class="section" id="cmake">
-<h4><a class="toc-backref" href="#id43">CMake</a><a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id47">CMake</a><a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h4>
 <p>To generate a JSON compilation database with <a class="reference external" href="https://cmake.org">CMake</a>,
 enable the <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html">CMAKE_EXPORT_COMPILE_COMMANDS</a> option
 (requires <code class="docutils literal"><span class="pre">CMake</span> <span class="pre">&gt;=</span> <span class="pre">2.8.5</span></code>).</p>
@@ -299,7 +313,7 @@ enable the <a class="reference external" href="https://cmake.org/cmake/help/late
 <p>This will create a file name <code class="docutils literal"><span class="pre">compile_commands.json</span></code> in the build directory.</p>
 </div>
 <div class="section" id="ninja">
-<h4><a class="toc-backref" href="#id44">Ninja</a><a class="headerlink" href="#ninja" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id48">Ninja</a><a class="headerlink" href="#ninja" title="Permalink to this headline">¶</a></h4>
 <p>To generate a JSON compilation database with <a class="reference external" href="https://ninja-build.org">Ninja</a>,
 use the <a class="reference external" href="https://ninja-build.org/manual.html#_extra_tools">-t compdb</a> option (requires <code class="docutils literal"><span class="pre">Ninja</span> <span class="pre">&gt;=</span> <span class="pre">1.2</span></code>).
 This option takes a list of rules as argument.</p>
@@ -331,9 +345,20 @@ there is an issue on the ninja bug tracker with an associated pull request:</p>
 <li><a class="reference external" href="https://github.com/ninja-build/ninja/pull/1025">https://github.com/ninja-build/ninja/pull/1025</a></li>
 </ul>
 </div>
+<div class="section" id="waf">
+<h4><a class="toc-backref" href="#id49">waf</a><a class="headerlink" href="#waf" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference internal" href="#waf">waf</a> supports the generation of a JSON Compilation database by adding the
+following lines to the wfscript:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="n">conf</span><span class="p">):</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;compiler_cxx&#39;</span><span class="p">)</span>
+    <span class="o">...</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;clang_compilation_database&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="specialized-tools">
-<h3><a class="toc-backref" href="#id45">Specialized tools</a><a class="headerlink" href="#specialized-tools" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id50">Specialized tools</a><a class="headerlink" href="#specialized-tools" title="Permalink to this headline">¶</a></h3>
 <p>Some build systems do not support generating a compilation database.</p>
 <p>A non-exhaustive list, includes:</p>
 <ul class="simple">
@@ -342,7 +367,7 @@ there is an issue on the ninja bug tracker with an associated pull request:</p>
 </ul>
 <p>For this reason, a few tools have emerged to respond to this issue.</p>
 <div class="section" id="bear-and-intercept-build">
-<h4><a class="toc-backref" href="#id46">bear and intercept-build</a><a class="headerlink" href="#bear-and-intercept-build" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id51">bear and intercept-build</a><a class="headerlink" href="#bear-and-intercept-build" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/rizsotto/Bear">Bear</a> and <cite>intercept-build</cite> from <a class="reference external" href="https://github.com/rizsotto/scan-build">scan-build</a>,
 are two tools from <a class="reference external" href="https://github.com/rizsotto">László Nagy</a>,
 that collects the compile options by intercepting calls to the compiler
@@ -367,7 +392,7 @@ It’s reasonable to think that someday, distributions will offer it as package.
 <p>A file named <code class="docutils literal"><span class="pre">compile_commands.json</span></code> is created in the current directory.</p>
 </div>
 <div class="section" id="cdcd">
-<h4><a class="toc-backref" href="#id47">cdcd</a><a class="headerlink" href="#cdcd" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id52">cdcd</a><a class="headerlink" href="#cdcd" title="Permalink to this headline">¶</a></h4>
 <p>The <a class="reference external" href="https://github.com/gicmo/cdcc">cdcc</a> uses a compiler wrapper
 to write an sqlite3 database,
 from which <code class="docutils literal"><span class="pre">compile_commands.json</span></code> files can be generated.</p>
@@ -380,27 +405,17 @@ for the <a class="reference external" href="https://developer.gnome.org/jhbuild/
 </ul>
 </div>
 </div>
-<div class="section" id="commands-to-compilation-database">
-<h4><a class="toc-backref" href="#id48">commands_to_compilation_database</a><a class="headerlink" href="#commands-to-compilation-database" title="Permalink to this headline">¶</a></h4>
-<p><a class="reference external" href="https://github.com/tee3/commands_to_compilation_database">commands_to_compilation_database</a>
-can generate compilation databases for Boost.Build, <code class="docutils literal"><span class="pre">make</span></code>,
-and a potentially other tools by mean of a regular expressions
-to match the build output.</p>
-<p>It also provides a tools to generate a compilation database
-from files specified to the standard input,
-and compile options specified on the command line.</p>
-</div>
 <div class="section" id="compdb">
-<h4><a class="toc-backref" href="#id49">compdb</a><a class="headerlink" href="#compdb" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id53">compdb</a><a class="headerlink" href="#compdb" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/Sarcasm/compdb">compdb</a> is a tool to manipulate compilation databases.
 It can generate a compilation database for header files.</p>
 </div>
 <div class="section" id="codechecker-log">
-<h4><a class="toc-backref" href="#id50">CodeChecker log</a><a class="headerlink" href="#codechecker-log" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id54">CodeChecker log</a><a class="headerlink" href="#codechecker-log" title="Permalink to this headline">¶</a></h4>
 <p>The <a class="reference external" href="https://github.com/Ericsson/codechecker/tree/5ae34cf9f234225852debd3022afac2abadc9a64/external-source-deps/build-logger">ld logger</a> tool from <a class="reference external" href="https://github.com/Ericsson/codechecker">codechecker</a>
 has an implementation of a build interceptor
 similar to <a class="reference internal" href="#bear-and-intercept-build">bear and intercept-build</a>.</p>
-<p>They favor <code class="docutils literal"><span class="pre">intercept-build</span></code> <a class="footnote-reference" href="#codechecker-intercept-build" id="id4">[2]</a> when available,
+<p>They favor <code class="docutils literal"><span class="pre">intercept-build</span></code> <a class="footnote-reference" href="#codechecker-intercept-build" id="id3">[2]</a> when available,
 but fallback to the <a class="reference external" href="https://github.com/Ericsson/codechecker/tree/5ae34cf9f234225852debd3022afac2abadc9a64/external-source-deps/build-logger">ld logger</a> tool when needed.</p>
 <p>The ld logger tool can be invoked with a build command,
 for example:</p>
@@ -432,8 +447,14 @@ but also for linking:</p>
 </ul>
 <p>Luckily, with <code class="docutils literal"><span class="pre">intercept-build</span></code>, these issues are fixed.</p>
 </div>
+<div class="section" id="sourcetrail-extension-for-visual-studio">
+<h4><a class="toc-backref" href="#id55">Sourcetrail Extension for Visual Studio</a><a class="headerlink" href="#sourcetrail-extension-for-visual-studio" title="Permalink to this headline">¶</a></h4>
+<p>The <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=vs-publisher-1208751.SourcetrailExtensino">Sourcetrail Extension</a> for Visual Studio is a GUI tool that generates
+JSON Compilation Databases from VS Solutions.
+A wide range of VS versions seems to be supported.</p>
+</div>
 <div class="section" id="sw-btrace">
-<h4><a class="toc-backref" href="#id51">sw-btrace</a><a class="headerlink" href="#sw-btrace" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id56">sw-btrace</a><a class="headerlink" href="#sw-btrace" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/rprichard/sourceweb">sourceweb</a>’s <a class="reference external" href="https://github.com/rprichard/sourceweb#btrace">btrace</a> tool, aka <code class="docutils literal"><span class="pre">sw-btrace</span></code>, use the same principle as <a class="reference internal" href="#bear-and-intercept-build">bear and intercept-build</a>.</p>
 <p>The generation is done in 2 steps:</p>
 <ol class="arabic simple">
@@ -448,8 +469,18 @@ out of the compilation log.</li>
 </div>
 <p>A file named <code class="docutils literal"><span class="pre">compile_commands.json</span></code> is created in the current directory.</p>
 </div>
+<div class="section" id="tee3-commands-to-compilation-database">
+<h4><a class="toc-backref" href="#id57">tee3/commands_to_compilation_database</a><a class="headerlink" href="#tee3-commands-to-compilation-database" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="https://github.com/tee3/commands_to_compilation_database">tee3/commands_to_compilation_database</a>
+can generate compilation databases for Boost.Build, <code class="docutils literal"><span class="pre">make</span></code>,
+and a potentially other tools by mean of a regular expressions
+to match the build output.</p>
+<p>It also provides a tools to generate a compilation database
+from files specified to the standard input,
+and compile options specified on the command line.</p>
+</div>
 <div class="section" id="xcpretty">
-<h4><a class="toc-backref" href="#id52">xcpretty</a><a class="headerlink" href="#xcpretty" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id58">xcpretty</a><a class="headerlink" href="#xcpretty" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/supermarin/xcpretty">xcpretty</a> can generate a compilation database for Xcode projects.
 To do so, it uses the <code class="docutils literal"><span class="pre">xcodebuild</span></code> output.</p>
 <p>Usage:</p>
@@ -460,11 +491,11 @@ To do so, it uses the <code class="docutils literal"><span class="pre">xcodebuil
 </div>
 </div>
 <div class="section" id="other-compilation-databases-and-tools">
-<h2><a class="toc-backref" href="#id34">Other compilation databases and tools</a><a class="headerlink" href="#other-compilation-databases-and-tools" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id37">Other compilation databases and tools</a><a class="headerlink" href="#other-compilation-databases-and-tools" title="Permalink to this headline">¶</a></h2>
 <p>This section shows that people invented their own compilation database version.
 Either because no standards existed yet, or because of specialized needs.</p>
 <div class="section" id="cc-args-py">
-<h3><a class="toc-backref" href="#id35">cc_args.py</a><a class="headerlink" href="#cc-args-py" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id38">cc_args.py</a><a class="headerlink" href="#cc-args-py" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference internal" href="#cc-args-py">cc_args.py</a> script
 from the Vim plugin <a class="reference external" href="https://github.com/Rip-Rip/clang_complete">clang_complete</a>.</p>
 <p>This script generates a <a class="reference external" href="https://github.com/Rip-Rip/clang_complete/blob/c7f5673a5d31704e9ec43d43c0606b243d5ef623/doc/clang_complete.txt#L59-L87">.clang_complete</a>
@@ -475,7 +506,7 @@ configuration file.</p>
 </div>
 </div>
 <div class="section" id="gccrec">
-<h3><a class="toc-backref" href="#id36">gccrec</a><a class="headerlink" href="#gccrec" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id39">gccrec</a><a class="headerlink" href="#gccrec" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">gccrec</span></code> tool from the now unmaintained <a class="reference external" href="https://github.com/m2ym/gccsense">gccsense</a> project.</p>
 <p>The tool records the compile options in an SQLite database.</p>
 <p>Links to the manual for reference:</p>
@@ -485,16 +516,17 @@ configuration file.</p>
 </ul>
 </div>
 <div class="section" id="rtags">
-<h3><a class="toc-backref" href="#id37">rtags</a><a class="headerlink" href="#rtags" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id40">rtags</a><a class="headerlink" href="#rtags" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference external" href="https://github.com/Andersbakken/rtags">rtags</a> project has a gcc wrapper named <code class="docutils literal"><span class="pre">gcc-rtags-wrapper.sh</span></code>
 to help feed its internal compilation database.</p>
 <p>Description here:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/Andersbakken/rtags/#setup">https://github.com/Andersbakken/rtags/#setup</a></li>
+<li>fixed link: <a class="reference external" href="https://github.com/Andersbakken/rtags/tree/499db6f98cc725bca66d122bce571adcdfa32187#setup">https://github.com/Andersbakken/rtags/tree/499db6f98cc725bca66d122bce571adcdfa32187#setup</a></li>
+<li>latest: <a class="reference external" href="https://github.com/Andersbakken/rtags/#setup">https://github.com/Andersbakken/rtags/#setup</a></li>
 </ul>
 </div>
 <div class="section" id="ycm-generator">
-<h3><a class="toc-backref" href="#id38">YCM-Generator</a><a class="headerlink" href="#ycm-generator" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id41">YCM-Generator</a><a class="headerlink" href="#ycm-generator" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/rdnetto/YCM-Generator">YCM-Generator</a> works differently than <a class="reference internal" href="#bear-and-intercept-build">bear and intercept-build</a>.
 It builds a project using a <em>fake toolchain</em>.
 This is faster than doing a full build,
@@ -504,7 +536,7 @@ instead it creates a configuration file for <a class="reference external" href="
 </div>
 </div>
 <div class="section" id="case-studies-on-a-few-open-source-projects">
-<h2><a class="toc-backref" href="#id39">Case studies on a few open source projects</a><a class="headerlink" href="#case-studies-on-a-few-open-source-projects" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id42">Case studies on a few open source projects</a><a class="headerlink" href="#case-studies-on-a-few-open-source-projects" title="Permalink to this headline">¶</a></h2>
 <p>This section describes how to generate a compilation database
 for a few open source projects.
 Depending on the project,
@@ -533,7 +565,7 @@ it’s not pleasant.</p>
 </dd>
 </dl>
 <div class="section" id="git">
-<h3><a class="toc-backref" href="#id40">git</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id43">git</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://git-scm.com/">git</a> uses a custom Makefile and a <code class="docutils literal"><span class="pre">configure</span></code> scripts for the build.
 The build system does not seem to have native support
 for the compilation database generation.
@@ -563,7 +595,7 @@ This is used in this example to match the developer workflow better.</p>
 <table class="docutils footnote" frame="void" id="codechecker-intercept-build" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[2]</a></td><td><a class="reference external" href="https://github.com/Ericsson/codechecker/blob/a83bcfde83c432b9b7ef5e99fae1745c91015fec/codechecker_lib/build_manager.py#L66-L85">https://github.com/Ericsson/codechecker/blob/a83bcfde83c432b9b7ef5e99fae1745c91015fec/codechecker_lib/build_manager.py#L66-L85</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td><a class="reference external" href="https://github.com/Ericsson/codechecker/blob/a83bcfde83c432b9b7ef5e99fae1745c91015fec/codechecker_lib/build_manager.py#L66-L85">https://github.com/Ericsson/codechecker/blob/a83bcfde83c432b9b7ef5e99fae1745c91015fec/codechecker_lib/build_manager.py#L66-L85</a></td></tr>
 </tbody>
 </table>
 </div>
