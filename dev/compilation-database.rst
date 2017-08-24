@@ -200,11 +200,11 @@ Usage::
   clang++ -MJ b.o.json -Wall -std=c++11 -o b.o -c b.cpp
 
 To merge the compilation database entries into a valid compilation database,
-it is possible to use sed::
+it is possible to use ``sed``::
 
-  sed -e '1s/^/[\n/' -e '$s/,$/\n]/' *.o.json
+  sed -e '1s/^/[\n/' -e '$s/,$/\n]/' *.o.json > compile_commands.json
 
-This sed invocation does the following:
+This ``sed`` invocation does the following:
 
 * insert the opening bracket: ``[``
 * concatenate the entries
@@ -329,13 +329,6 @@ for the `JHBuild tool <https://developer.gnome.org/jhbuild/>`_.
    * https://christian.kellner.me/2017/03/28/emacs-as-c-ide-and-jhbuild/
 
 
-compdb
-^^^^^^
-
-compdb_ is a tool to manipulate compilation databases.
-It can generate a compilation database for header files.
-
-
 CodeChecker log
 ^^^^^^^^^^^^^^^
 
@@ -373,6 +366,32 @@ Howewer, in version 5.6, the resulting compilation database is surprising:
 
 
 Luckily, with ``intercept-build``, these issues are fixed.
+
+
+compdb
+^^^^^^
+
+compdb_ is a tool to manipulate compilation databases.
+It can generate a compilation database for header files.
+
+
+compiledb-generator
+^^^^^^^^^^^^^^^^^^^
+
+`compiledb-generator <https://github.com/nickdiego/compiledb-generator>`_
+is a tool to generate compilation database for make-based build systems.
+It works by parsing the output of commands like ``make --dry-run``.
+
+Usage::
+
+  compiledb-make all > compile_commands.json
+
+To parse an existing build log::
+
+  compiledb-parser . < build-log.txt
+
+There is also a specialized command ``compiledb-aosp``,
+to deal with `AOSP <https://source.android.com/>`_.
 
 
 Sourcetrail Extension for Visual Studio
