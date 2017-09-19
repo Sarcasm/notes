@@ -183,10 +183,13 @@ the generation of a compilation database.
 Bazel
 ^^^^^
 
-Google/Kythe as an experimental_action_listener to produce a compilation database.
+Google/Kythe as an experimental_action_listener to produce a compilation database:
 
 - `github.com/google/kythe: tools/cpp/generate_compilation_database.sh <https://github.com/google/kythe/blob/cb58e9b4b5ee911db9495b382c9fe50e936f2bb3/tools/cpp/generate_compilation_database.sh>`_
 
+There is also `bazel-compilation-database <https://github.com/grailbio/bazel-compilation-database>`_,
+which is faster, easier to setup and does not require a full build,
+at the cost of being less accurate.
 
 Clang
 ^^^^^
