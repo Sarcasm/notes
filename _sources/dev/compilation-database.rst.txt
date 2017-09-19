@@ -68,12 +68,10 @@ Clang tools
 A few other tools seems to be available,
 but they aren't officially documented:
 
+* ``clang-refactor``
 * ``clang-reorder-fields``
 * ``clang-change-namespace``
 * ``clang-move``
-
-It's possible these tools will be merged into one,
-be it called ``clang-refactor`` or not.
 
 .. seealso::
 
@@ -83,18 +81,6 @@ be it called ``clang-refactor`` or not.
 
    * `clang-refactor's design document
      <https://docs.google.com/document/d/1w9IkR0_Gqmd5w4CZ2t_ZDZrNLYVirQPyMS41533HQZE/edit?usp=sharing>`_
-
-   * ``clang-refactor`` state is undefined at this point:
-
-       "As you can see, the project scale is just huge. I started it as an intern
-       this summer, but now I got back to studies and therefore I can't work on
-       that extensively at least until the next summer.
-
-       However, as far as I understand my former team was interested in the
-       project and there is a decent chance they'll continue my work,
-       I'll be happy if they do."
-
-       -- https://www.reddit.com/r/cpp/comments/59n8ya/what_happened_to_clang_server/d9a2xi3/
 
 
 Text editors and IDEs
@@ -183,10 +169,13 @@ the generation of a compilation database.
 Bazel
 ^^^^^
 
-Google/Kythe as an experimental_action_listener to produce a compilation database.
+Google/Kythe as an experimental_action_listener to produce a compilation database:
 
 - `github.com/google/kythe: tools/cpp/generate_compilation_database.sh <https://github.com/google/kythe/blob/cb58e9b4b5ee911db9495b382c9fe50e936f2bb3/tools/cpp/generate_compilation_database.sh>`_
 
+There is also `bazel-compilation-database <https://github.com/grailbio/bazel-compilation-database>`_,
+which is faster, easier to setup and does not require a full build,
+at the cost of being less accurate.
 
 Clang
 ^^^^^
@@ -200,11 +189,11 @@ Usage::
   clang++ -MJ b.o.json -Wall -std=c++11 -o b.o -c b.cpp
 
 To merge the compilation database entries into a valid compilation database,
-it is possible to use sed::
+it is possible to use ``sed``::
 
-  sed -e '1s/^/[\n/' -e '$s/,$/\n]/' *.o.json
+  sed -e '1s/^/[\n/' -e '$s/,$/\n]/' *.o.json > compile_commands.json
 
-This sed invocation does the following:
+This ``sed`` invocation does the following:
 
 * insert the opening bracket: ``[``
 * concatenate the entries
@@ -329,13 +318,6 @@ for the `JHBuild tool <https://developer.gnome.org/jhbuild/>`_.
    * https://christian.kellner.me/2017/03/28/emacs-as-c-ide-and-jhbuild/
 
 
-compdb
-^^^^^^
-
-compdb_ is a tool to manipulate compilation databases.
-It can generate a compilation database for header files.
-
-
 CodeChecker log
 ^^^^^^^^^^^^^^^
 
@@ -373,6 +355,32 @@ Howewer, in version 5.6, the resulting compilation database is surprising:
 
 
 Luckily, with ``intercept-build``, these issues are fixed.
+
+
+compdb
+^^^^^^
+
+compdb_ is a tool to manipulate compilation databases.
+It can generate a compilation database for header files.
+
+
+compiledb-generator
+^^^^^^^^^^^^^^^^^^^
+
+`compiledb-generator <https://github.com/nickdiego/compiledb-generator>`_
+is a tool to generate compilation database for make-based build systems.
+It works by parsing the output of commands like ``make --dry-run``.
+
+Usage::
+
+  compiledb-make all > compile_commands.json
+
+To parse an existing build log::
+
+  compiledb-parser . < build-log.txt
+
+There is also a specialized command ``compiledb-aosp``,
+to deal with `AOSP <https://source.android.com/>`_.
 
 
 Sourcetrail Extension for Visual Studio
