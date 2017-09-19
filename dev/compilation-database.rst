@@ -68,12 +68,10 @@ Clang tools
 A few other tools seems to be available,
 but they aren't officially documented:
 
+* ``clang-refactor``
 * ``clang-reorder-fields``
 * ``clang-change-namespace``
 * ``clang-move``
-
-It's possible these tools will be merged into one,
-be it called ``clang-refactor`` or not.
 
 .. seealso::
 
@@ -83,18 +81,6 @@ be it called ``clang-refactor`` or not.
 
    * `clang-refactor's design document
      <https://docs.google.com/document/d/1w9IkR0_Gqmd5w4CZ2t_ZDZrNLYVirQPyMS41533HQZE/edit?usp=sharing>`_
-
-   * ``clang-refactor`` state is undefined at this point:
-
-       "As you can see, the project scale is just huge. I started it as an intern
-       this summer, but now I got back to studies and therefore I can't work on
-       that extensively at least until the next summer.
-
-       However, as far as I understand my former team was interested in the
-       project and there is a decent chance they'll continue my work,
-       I'll be happy if they do."
-
-       -- https://www.reddit.com/r/cpp/comments/59n8ya/what_happened_to_clang_server/d9a2xi3/
 
 
 Text editors and IDEs
