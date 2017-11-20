@@ -95,6 +95,16 @@ With this, you can have features such as semantic code completion
 and on-the-fly syntax checking.
 
 
+LSP
+^^^
+
+LSP stands for Language Server Protocol,
+see `Microsoft/language-server-protocol on Github <https://github.com/Microsoft/language-server-protocol>`_.
+
+* https://github.com/jacobdufault/cquery
+* `clangd <https://clang.llvm.org/extra/clangd.html>`_
+
+
 Atom
 ^^^^
 
