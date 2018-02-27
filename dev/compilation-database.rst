@@ -260,11 +260,22 @@ there is an issue on the ninja bug tracker with an associated pull request:
 * https://github.com/ninja-build/ninja/pull/1025
 
 
+Qbs
+^^^
+
+`qbs <https://doc.qt.io/qbs/>`_ natively support
+the generation of a compilation database.
+
+Usage::
+
+  qbs generate --generator clangdb
+
+
 waf
 ^^^
 
-waf_ supports the generation of a JSON Compilation database by adding the
-following lines to the wfscript::
+`waf <https://waf.io>`_ supports the generation of
+a JSON Compilation database by adding the following lines to the wfscript::
 
   def configure(conf):
       conf.load('compiler_cxx')
