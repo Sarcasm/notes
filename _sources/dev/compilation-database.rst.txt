@@ -156,6 +156,8 @@ Other tools
 
 * `Sourcetrail <https://www.sourcetrail.com>`_
 
+* `CLion <https://www.jetbrains.com/clion/>`_
+
 .. seealso::
 
    Some of the tools listed here:
