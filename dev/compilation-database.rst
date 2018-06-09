@@ -59,6 +59,7 @@ Clang tools
 `Core Clang tools`_ and `extra Clang tools`_:
 
 * `clang-check <http://clang.llvm.org/docs/ClangCheck.html>`_
+* `clang-doc <https://clang.llvm.org/extra/clang-doc.html>`_
 * `clang-include-fixer <http://clang.llvm.org/extra/include-fixer.html>`_
 * `clang-rename <http://clang.llvm.org/extra/clang-rename.html>`_
 * `clang-tidy <http://clang.llvm.org/extra/clang-tidy>`_
