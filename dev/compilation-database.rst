@@ -202,9 +202,13 @@ Usage::
   clang++ -MJ b.o.json -Wall -std=c++11 -o b.o -c b.cpp
 
 To merge the compilation database entries into a valid compilation database,
-it is possible to use ``sed``::
+it is possible to use (GNU) ``sed``::
 
   sed -e '1s/^/[\n/' -e '$s/,$/\n]/' *.o.json > compile_commands.json
+
+Or, using any ``sed`` under Bash, Zsh or ksh::
+
+  sed -e '1s/^/[\'$'\n''/' -e '$s/,$/\'$'\n'']/' *.o.json > compile_commands.json
 
 This ``sed`` invocation does the following:
 
