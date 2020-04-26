@@ -241,30 +241,12 @@ This option takes a list of rules as argument.
 
 Usage::
 
-  ninja -t compdb [RULES...]
+  ninja -t compdb > compile_commands.json
 
-This works well with projects containing one rule for C++ files,
-such as Ninja_ itself::
+.. note::
 
-  ninja -t compdb cxx > compile_commands.json
-
-However, it gets ugly if the Ninja build files contains a lot of rules.
-You have to find a way to get a list of all the rules.
-For example,
-as of version 3.6.1,
-CMake generates a lot of rules.
-To generate a compilation database of Clang using CMake's Ninja generator
-(``cmake -G Ninja <...>``)::
-
-  ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' rules.ninja) > compile_commands.json
-
-This method is not ideal,
-the ``awk`` line is not really good parser for Ninja syntax.
-To make things better,
-there is an issue on the ninja bug tracker with an associated pull request:
-
-* https://github.com/ninja-build/ninja/issues/1024
-* https://github.com/ninja-build/ninja/pull/1025
+  Ninja < 1.10 were more difficult to use,
+  they required a rule name to be specified as an argument.
 
 
 Qbs
