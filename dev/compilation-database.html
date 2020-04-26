@@ -290,8 +290,12 @@ generates a compilation database entry per input (requires <code class="docutils
 </pre></div>
 </div>
 <p>To merge the compilation database entries into a valid compilation database,
-it is possible to use <code class="docutils literal notranslate"><span class="pre">sed</span></code>:</p>
+it is possible to use (GNU) <code class="docutils literal notranslate"><span class="pre">sed</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;1s/^/[</span><span class="se">\n</span><span class="s1">/&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;$s/,$/</span><span class="se">\n</span><span class="s1">]/&#39;</span> <span class="o">*.</span><span class="n">o</span><span class="o">.</span><span class="n">json</span> <span class="o">&gt;</span> <span class="n">compile_commands</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>Or, using any <code class="docutils literal notranslate"><span class="pre">sed</span></code> under Bash, Zsh or ksh:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sed -e &#39;1s/^/[\&#39;$&#39;\n&#39;&#39;/&#39; -e &#39;$s/,$/\&#39;$&#39;\n&#39;&#39;]/&#39; *.o.json &gt; compile_commands.json
 </pre></div>
 </div>
 <p>This <code class="docutils literal notranslate"><span class="pre">sed</span></code> invocation does the following:</p>
