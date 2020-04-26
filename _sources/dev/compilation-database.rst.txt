@@ -239,7 +239,7 @@ Usage::
 
   ninja -t compdb > compile_commands.json
 
-Note::
+.. note::
 
   Ninja < 1.10 were more difficult to use,
   they required a rule name to be specified as an argument.
