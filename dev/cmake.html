@@ -41,9 +41,20 @@
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p></li>
-<li><p><a class="reference internal" href="#optional-dependencies" id="id2">Optional dependencies</a></p>
+<li><p><a class="reference internal" href="#compiler-options" id="id2">Compiler options</a></p>
 <ul>
-<li><p><a class="reference internal" href="#the-pattern" id="id3">The pattern</a></p></li>
+<li><p><a class="reference internal" href="#c-standard" id="id3">C++ standard</a></p>
+<ul>
+<li><p><a class="reference internal" href="#do-s" id="id4">Do’s</a></p></li>
+<li><p><a class="reference internal" href="#don-ts" id="id5">Don’ts</a></p></li>
+<li><p><a class="reference internal" href="#see-also" id="id6">See also</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#optional-dependencies" id="id7">Optional dependencies</a></p>
+<ul>
+<li><p><a class="reference internal" href="#the-pattern" id="id8">The pattern</a></p></li>
 </ul>
 </li>
 </ul>
@@ -51,9 +62,89 @@
 <section id="introduction">
 <h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>List of CMake patterns/best practices.</p>
+<p>These patterns are directed towards people writing the project CMake files,
+but accounts for how the project CMake build
+will be consumed by packagers or external developers.</p>
+<p>The goals is to minimize the boilerplate for people writing the project CMake files,
+and to maximize the portability and easy of use for packagers or external developers.</p>
+</section>
+<section id="compiler-options">
+<h2><a class="toc-backref" href="#id2">Compiler options</a><a class="headerlink" href="#compiler-options" title="Permalink to this headline">¶</a></h2>
+<section id="c-standard">
+<h3><a class="toc-backref" href="#id3">C++ standard</a><a class="headerlink" href="#c-standard" title="Permalink to this headline">¶</a></h3>
+<section id="do-s">
+<h4><a class="toc-backref" href="#id4">Do’s</a><a class="headerlink" href="#do-s" title="Permalink to this headline">¶</a></h4>
+<p>Set a minimum standard, not an exact standard.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">target_compile_features(foo</span> <span class="pre">PUBLIC</span> <span class="pre">cxx_std_11)</span></code>
+to specify the minimum standard your target requires:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cmake.org/cmake/help/latest/command/target_compile_features.html">cmake-commands(7) » target_compile_features</a></p></li>
+<li><p>List of available standards in <a class="reference external" href="https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html#prop_tgt:CXX_STANDARD">cmake-properties(7) » CXX_STANDARD</a>.</p></li>
+</ul>
+<p>This allow a developer or packager to upgrade the standard seamlessly,
+e.g. a packager may want to upgrade to C++20 for ABI-compatibility reasons.
+This can be done by setting <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CXX_STANDARD.html">CMAKE_CXX_STANDARD</a> from a toolchain file,
+or from the command line:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake -DCMAKE_CXX_STANDARD<span class="o">=</span><span class="m">20</span> ...
+</pre></div>
+</div>
+<p>CMake will also respect the <code class="docutils literal notranslate"><span class="pre">-std=&lt;standard&gt;</span></code> flag,
+if specified specified from the environment variable <code class="docutils literal notranslate"><span class="pre">CXXFLAGS</span></code>
+(but this is read only during the initial project generation):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>env <span class="nv">CXXFLAGS</span><span class="o">=</span>-std<span class="o">=</span>c++20 cmake ...
+</pre></div>
+</div>
+<p>or from the command line <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_FLAGS.html">CMAKE_CXX_FLAGS</a>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake -DCMAKE_CXX_FLAGS<span class="o">=</span>-std<span class="o">=</span>c++20 ...
+</pre></div>
+</div>
+<p>When the compiler does not support the given standard,
+CMake will generate an error during generation:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake ..
+<span class="go">-- The CXX compiler identification is GNU 4.8.5</span>
+<span class="go">-- Detecting CXX compiler ABI info</span>
+<span class="go">-- Detecting CXX compiler ABI info - done</span>
+<span class="go">-- Check for working CXX compiler: /usr/bin/c++ - skipped</span>
+<span class="go">-- Detecting CXX compile features</span>
+<span class="go">-- Detecting CXX compile features - done</span>
+<span class="hll"><span class="go">CMake Error at CMakeLists.txt:55 (target_compile_features):</span>
+</span><span class="hll"><span class="go">  target_compile_features The compiler feature &quot;cxx_std_17&quot; is not known to</span>
+</span><span class="hll"><span class="go">  CXX compiler</span>
+</span><span class="hll">
+</span><span class="hll"><span class="go">  &quot;GNU&quot;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="go">  version 4.8.5.</span>
+</span>
+
+<span class="go">-- Configuring incomplete, errors occurred!</span>
+<span class="go">See also &quot;/root/app/build/CMakeFiles/CMakeOutput.log&quot;.</span>
+<span class="go">See also &quot;/root/app/build/CMakeFiles/CMakeError.log&quot;.</span>
+</pre></div>
+</div>
+<p>In CI, to make sure the minimum C++ standard is actually tested,
+set it explicitely using one of the aforementioned methods.</p>
+</section>
+<section id="don-ts">
+<h4><a class="toc-backref" href="#id5">Don’ts</a><a class="headerlink" href="#don-ts" title="Permalink to this headline">¶</a></h4>
+<p>(don’t) set <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CXX_STANDARD.html">CMAKE_CXX_STANDARD</a> in a CMakeLists.txt:</p>
+<ul>
+<li><p>It is targeted to toolchain files users,
+for packagers/developers that want to use a specific version.</p>
+<p>See <a class="reference external" href="https://gitlab.kitware.com/cmake/cmake/issues/17146#note_299405">https://gitlab.kitware.com/cmake/cmake/issues/17146#note_299405</a>.</p>
+</li>
+<li><p>It will not be propagated to downstream targets.</p></li>
+</ul>
+</section>
+<section id="see-also">
+<h4><a class="toc-backref" href="#id6">See also</a><a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-compile-features.7.html#requiring-language-standards">https://cmake.org/cmake/help/latest/manual/cmake-compile-features.7.html#requiring-language-standards</a></p></li>
+</ul>
+</section>
+</section>
 </section>
 <section id="optional-dependencies">
-<h2><a class="toc-backref" href="#id2">Optional dependencies</a><a class="headerlink" href="#optional-dependencies" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Optional dependencies</a><a class="headerlink" href="#optional-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>Third party or platform-specific integrations
 are useful to represent as optional dependencies.</p>
 <p>As someone who wants to quick-test a project,
@@ -75,7 +166,7 @@ so that I can make sure the project works with (or without) it:</p>
 </pre></div>
 </div>
 <section id="the-pattern">
-<h3><a class="toc-backref" href="#id3">The pattern</a><a class="headerlink" href="#the-pattern" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">The pattern</a><a class="headerlink" href="#the-pattern" title="Permalink to this headline">¶</a></h3>
 <p>Declare an option <code class="docutils literal notranslate"><span class="pre">WITH_${INTEGRATION}</span></code> with 3 possible value:
 <code class="docutils literal notranslate"><span class="pre">AUTO</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">ON</span></code> and <code class="docutils literal notranslate"><span class="pre">OFF</span></code>:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span> <span class="s2">&quot;AUTO&quot;</span> <span class="s">CACHE</span> <span class="s">STRING</span>
