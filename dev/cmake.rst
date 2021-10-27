@@ -13,6 +13,104 @@ Introduction
 
 List of CMake patterns/best practices.
 
+These patterns are directed towards people writing the project CMake files,
+but accounts for how the project CMake build
+will be consumed by packagers or external developers.
+
+The goals is to minimize the boilerplate for people writing the project CMake files,
+and to maximize the portability and easy of use for packagers or external developers.
+
+
+Compiler options
+================
+
+C++ standard
+------------
+
+Do's
+~~~~
+
+Set a minimum standard, not an exact standard.
+
+Use ``target_compile_features(foo PUBLIC cxx_std_11)``
+to specify the minimum standard your target requires:
+
+- `cmake-commands(7) » target_compile_features <https://cmake.org/cmake/help/latest/command/target_compile_features.html>`_
+- List of available standards in `cmake-properties(7) » CXX_STANDARD <https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html#prop_tgt:CXX_STANDARD>`_.
+
+This allow a developer or packager to upgrade the standard seamlessly,
+e.g. a packager may want to upgrade to C++20 for ABI-compatibility reasons.
+This can be done by setting `CMAKE_CXX_STANDARD`_ from a toolchain file,
+or from the command line:
+
+.. code-block:: console
+
+   $ cmake -DCMAKE_CXX_STANDARD=20 ...
+
+CMake will also respect the ``-std=<standard>`` flag,
+if specified specified from the environment variable ``CXXFLAGS``
+(but this is read only during the initial project generation):
+
+.. code-block:: console
+
+   $ env CXXFLAGS=-std=c++20 cmake ...
+
+or from the command line `CMAKE_CXX_FLAGS`_:
+
+.. code-block:: console
+
+   $ cmake -DCMAKE_CXX_FLAGS=-std=c++20 ...
+
+
+When the compiler does not support the given standard,
+CMake will generate an error during generation:
+
+.. code-block:: console
+   :emphasize-lines: 8-14
+
+   $ cmake ..
+   -- The CXX compiler identification is GNU 4.8.5
+   -- Detecting CXX compiler ABI info
+   -- Detecting CXX compiler ABI info - done
+   -- Check for working CXX compiler: /usr/bin/c++ - skipped
+   -- Detecting CXX compile features
+   -- Detecting CXX compile features - done
+   CMake Error at CMakeLists.txt:55 (target_compile_features):
+     target_compile_features The compiler feature "cxx_std_17" is not known to
+     CXX compiler
+
+     "GNU"
+
+     version 4.8.5.
+
+
+   -- Configuring incomplete, errors occurred!
+   See also "/root/app/build/CMakeFiles/CMakeOutput.log".
+   See also "/root/app/build/CMakeFiles/CMakeError.log".
+
+
+In CI, to make sure the minimum C++ standard is actually tested,
+set it explicitely using one of the aforementioned methods.
+
+
+Don'ts
+~~~~~~
+(don't) set `CMAKE_CXX_STANDARD`_ in a CMakeLists.txt:
+
+- It is targeted to toolchain files users,
+  for packagers/developers that want to use a specific version.
+
+  See https://gitlab.kitware.com/cmake/cmake/issues/17146#note_299405.
+
+- It will not be propagated to downstream targets.
+
+See also
+~~~~~~~~
+
+- https://cmake.org/cmake/help/latest/manual/cmake-compile-features.7.html#requiring-language-standards
+
+.. _CMAKE_CXX_STANDARD: https://cmake.org/cmake/help/latest/variable/CMAKE_CXX_STANDARD.html
+.. _CMAKE_CXX_FLAGS: https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_FLAGS.html
 
 Optional dependencies
 =====================
