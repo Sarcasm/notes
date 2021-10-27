@@ -9,7 +9,7 @@
 
 # General information about the project.
 project = 'Sarcasm tips'
-copyright = '2016, Guillaume Papin'
+copyright = '2016-2021, Guillaume Papin'
 author = 'Guillaume Papin'
 
 # The version info for the project you're documenting, acts as replacement for
