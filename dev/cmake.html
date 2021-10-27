@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CMake &#8212; Sarcasm notebook</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/haiku.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tools" href="../tools/index.html" />
+    <link rel="prev" title="Compilation database" href="compilation-database.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
+          <span>Sarcasm notebook</span></a></h1>
+        <h2 class="heading"><span>CMake</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="compilation-database.html">Compilation database</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="../tools/index.html">Tools</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content" role="main">
+        
+        
+  <section id="cmake">
+<h1>CMake<a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#optional-dependencies" id="id2">Optional dependencies</a></p>
+<ul>
+<li><p><a class="reference internal" href="#the-pattern" id="id3">The pattern</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="introduction">
+<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>List of CMake patterns/best practices.</p>
+</section>
+<section id="optional-dependencies">
+<h2><a class="toc-backref" href="#id2">Optional dependencies</a><a class="headerlink" href="#optional-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Third party or platform-specific integrations
+are useful to represent as optional dependencies.</p>
+<p>As someone who wants to quick-test a project,
+having interest in the core of the project,
+I prefer to have the optional dependencies auto-detected
+so that I can get started without being encombered by build issues
+or having to install system packages:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir build
+<span class="gp">$ </span><span class="nb">cd</span> build
+<span class="gp">$ </span>cmake ..
+</pre></div>
+</div>
+<p>As a packager, or as a developer working on the optional feature,
+I want control of the detection,
+so that I can make sure the project works with (or without) it:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir build
+<span class="gp">$ </span><span class="nb">cd</span> build
+<span class="gp">$ </span>cmake -DWITH_FOO<span class="o">=</span>ON ..
+</pre></div>
+</div>
+<section id="the-pattern">
+<h3><a class="toc-backref" href="#id3">The pattern</a><a class="headerlink" href="#the-pattern" title="Permalink to this headline">¶</a></h3>
+<p>Declare an option <code class="docutils literal notranslate"><span class="pre">WITH_${INTEGRATION}</span></code> with 3 possible value:
+<code class="docutils literal notranslate"><span class="pre">AUTO</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">ON</span></code> and <code class="docutils literal notranslate"><span class="pre">OFF</span></code>:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span> <span class="s2">&quot;AUTO&quot;</span> <span class="s">CACHE</span> <span class="s">STRING</span>
+  <span class="s2">&quot;Whether or not to support journald logging (this feature requires the systemd development package)&quot;</span><span class="p">)</span>
+<span class="nb">set_property</span><span class="p">(</span><span class="s">CACHE</span> <span class="s">WITH_JOURNALD</span> <span class="s">PROPERTY</span> <span class="s">STRINGS</span> <span class="s">AUTO</span> <span class="s">ON</span> <span class="s">OFF</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Thanks to the use of
+<a class="reference external" href="https://cmake.org/cmake/help/latest/prop_cache/STRINGS.html">cmake-properties(7) » STRINGS</a>,
+the CMake UIs will complete the possible values,
+which is nice for discoverability:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ccmake</span></code> will cycle through the values when hitting <code class="docutils literal notranslate"><span class="pre">Enter</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmake-gui</span></code> will show a combo box:</p>
+<a class="reference internal image-reference" href="../_images/option-auto-cmake-gui-combobox.png"><img alt="cmake-gui combo box screenshot" src="../_images/option-auto-cmake-gui-combobox.png" style="width: 309.0px; height: 175.0px;" /></a>
+</li>
+</ul>
+<p>Later on, when resolving dependencies:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span> <span class="p">(</span><span class="s">WITH_JOURNALD</span> <span class="s">STREQUAL</span> <span class="s2">&quot;AUTO&quot;</span><span class="p">)</span>
+   <span class="nb">pkg_check_modules</span><span class="p">(</span><span class="s">libsystemd</span> <span class="s">IMPORTED_TARGET</span> <span class="s">libsystemd</span><span class="p">)</span>
+   <span class="c"># shadow origin value with ON/OFF,</span>
+   <span class="c"># so journald-specific code just has to check:</span>
+   <span class="c">#     if (WITH_JOURNALD)</span>
+   <span class="c">#         ...</span>
+   <span class="c">#     endif()</span>
+   <span class="nb">if</span> <span class="p">(</span><span class="s">libsystemd_FOUND</span><span class="p">)</span>
+     <span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span> <span class="s">ON</span><span class="p">)</span>
+   <span class="nb">else</span><span class="p">()</span>
+     <span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span> <span class="s">OFF</span><span class="p">)</span>
+   <span class="nb">endif</span><span class="p">()</span>
+ <span class="nb">elseif</span> <span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="p">)</span>  <span class="c"># ON</span>
+   <span class="nb">pkg_check_modules</span><span class="p">(</span><span class="s">libsystemd</span> <span class="s">REQUIRED</span> <span class="s">IMPORTED_TARGET</span> <span class="s">libsystemd</span><span class="p">)</span>
+ <span class="nb">endif</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>After we checked the special value <code class="docutils literal notranslate"><span class="pre">AUTO</span></code>,
+we shadow the variable with a boolean value.</p>
+<p>From now on, you can consider this option a boolean,
+check it with <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(WITH_JOURNALD)</span></code>, example:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span> <span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="p">)</span>
+    <span class="nb">set_property</span><span class="p">(</span>
+      <span class="s">SOURCE</span> <span class="s">src/log_backends.cpp</span>
+      <span class="s">APPEND</span> <span class="s">PROPERTY</span> <span class="s">COMPILE_DEFINITIONS</span> <span class="s">WITH_JOURNALD</span>
+    <span class="p">)</span>
+
+  <span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">foo</span> <span class="s">PRIVATE</span> <span class="s">PkgConfig::libsystemd</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>All the CMake boolean values are also supported, not just <code class="docutils literal notranslate"><span class="pre">ON/OFF</span></code>,
+e.g. <code class="docutils literal notranslate"><span class="pre">-DWITH_JOURNALD=YES</span></code>, <code class="docutils literal notranslate"><span class="pre">-DWITH_JOURNALD=0</span></code>, <code class="docutils literal notranslate"><span class="pre">-DWITH_JOURNALD=TRUE</span></code>.</p>
+<p>This means it is safe to use replace boolean options like
+<a class="reference external" href="https://cmake.org/cmake/help/latest/command/option.html">option(WITH_JOURNALD, “…”)</a>
+to support this new <code class="docutils literal notranslate"><span class="pre">AUTO</span></code> value in a backward compatible way,
+without breaking packagers explicit configurations.</p>
+</section>
+</section>
+</section>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="compilation-database.html">Compilation database</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="../tools/index.html">Tools</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2021, Guillaume Papin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+  </body>
+</html>

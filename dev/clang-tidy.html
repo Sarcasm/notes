@@ -4,14 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Clang-Tidy &#8212; Sarcasm notebook</title>
-    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/haiku.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="compdb" href="compdb.html" />
@@ -35,7 +36,7 @@
       <div class="content" role="main">
         
         
-  <div class="section" id="clang-tidy">
+  <section id="clang-tidy">
 <h1>Clang-Tidy<a class="headerlink" href="#clang-tidy" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -55,7 +56,7 @@
 <ul class="simple">
 <li><p><a class="reference external" href="http://clang.llvm.org/extra/clang-tidy/">http://clang.llvm.org/extra/clang-tidy/</a></p></li>
 </ul>
-<div class="section" id="identifier-naming">
+<section id="identifier-naming">
 <h2><a class="toc-backref" href="#id4">Identifier naming</a><a class="headerlink" href="#identifier-naming" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference external" href="http://clang.llvm.org/extra/clang-tidy/checks/readability-identifier-naming.html">readability-identifier-naming</a> check ensures the identifiers matches the
 coding style of the project.
@@ -99,15 +100,15 @@ private members start with <code class="docutils literal notranslate"><span clas
     <span class="n">test</span><span class="o">.</span><span class="n">cpp</span> <span class="o">--</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">11</span>
 </pre></div>
 </div>
-<div class="section" id="see-also">
+<section id="see-also">
 <h3><a class="toc-backref" href="#id5">See also</a><a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>List of available identifiers:
 <a class="reference external" href="https://github.com/llvm-mirror/clang-tools-extra/blob/8eb332109a2c68f791eda33fe28f174e77bbc5fe/clang-tidy/readability/IdentifierNamingCheck.cpp#L66">clang-tidy/readability/IdentifierNamingCheck.cpp</a></p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="cmake-integration">
+</section>
+</section>
+<section id="cmake-integration">
 <h2><a class="toc-backref" href="#id6">CMake integration</a><a class="headerlink" href="#cmake-integration" title="Permalink to this headline">¶</a></h2>
 <p>Since CMake 3.6 <a class="footnote-reference brackets" href="#cmake-3-6-release" id="id1">1</a>,
 it is possible to run <code class="docutils literal notranslate"><span class="pre">clang-tidy</span></code> as a part of the build.
@@ -131,7 +132,7 @@ this can be useful for continuous integration systems.
 The return code of <code class="docutils literal notranslate"><span class="pre">clang-tidy</span></code> is handled
 since CMake 3.8 <a class="footnote-reference brackets" href="#cmake-3-8-release" id="id2">2</a>,
 so this won’t work with the CMake 3.6 and 3.7 series.</p>
-<div class="section" id="what-s-wrong-with-the-cmake-integration">
+<section id="what-s-wrong-with-the-cmake-integration">
 <h3><a class="toc-backref" href="#id7">What’s wrong with the CMake integration?</a><a class="headerlink" href="#what-s-wrong-with-the-cmake-integration" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p>Constant overhead for compilation in developement.</p>
@@ -176,9 +177,9 @@ which lacks something like <code class="docutils literal notranslate"><span clas
 <dd><p><a class="reference external" href="https://cmake.org/cmake/help/v3.8/release/3.8.html">https://cmake.org/cmake/help/v3.8/release/3.8.html</a></p>
 </dd>
 </dl>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
       </div>
@@ -195,8 +196,8 @@ which lacks something like <code class="docutils literal notranslate"><span clas
       </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2016, Guillaume Papin.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.2.
+        &#169; Copyright 2016-2021, Guillaume Papin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
     </div>
   </body>
 </html>

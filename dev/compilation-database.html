@@ -4,17 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Compilation database &#8212; Sarcasm notebook</title>
-    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/haiku.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tools" href="../tools/index.html" />
+    <link rel="next" title="CMake" href="cmake.html" />
     <link rel="prev" title="compdb" href="compdb.html" /> 
   </head><body>
       <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
@@ -28,14 +29,14 @@
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="../index.html">Contents</a>
         &#160;&#160;::&#160;&#160;
-        <a href="../tools/index.html">Tools</a>&#160;&#160;»
+        <a href="cmake.html">CMake</a>&#160;&#160;»
         </p>
 
       </div>
       <div class="content" role="main">
         
         
-  <div class="section" id="compilation-database">
+  <section id="compilation-database">
 <h1>Compilation database<a class="headerlink" href="#compilation-database" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -96,7 +97,7 @@
 </li>
 </ul>
 </div>
-<div class="section" id="what-is-a-compilation-database">
+<section id="what-is-a-compilation-database">
 <h2><a class="toc-backref" href="#id17">What is a compilation database?</a><a class="headerlink" href="#what-is-a-compilation-database" title="Permalink to this headline">¶</a></h2>
 <p>A compilation database is a database for compile options.
 It records which compile options are used to build the files in a project.
@@ -130,12 +131,12 @@ is available on Eli Bendersky’s blog:</p>
 <li><p><a class="reference external" href="http://eli.thegreenplace.net/2014/05/21/compilation-databases-for-clang-based-tools">Compilation databases for Clang-based tools</a></p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="what-is-it-good-for">
+</section>
+<section id="what-is-it-good-for">
 <h2><a class="toc-backref" href="#id18">What is it good for?</a><a class="headerlink" href="#what-is-it-good-for" title="Permalink to this headline">¶</a></h2>
 <p>You might wonder what a compilation database is good for.
 This section list a various tools that may benefit from a compilation database.</p>
-<div class="section" id="clang-tools">
+<section id="clang-tools">
 <h3><a class="toc-backref" href="#id19">Clang tools</a><a class="headerlink" href="#clang-tools" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://clang.llvm.org/docs/ClangTools.html">Core Clang tools</a> and <a class="reference external" href="http://clang.llvm.org/extra/index.html">extra Clang tools</a>:</p>
 <ul class="simple">
@@ -162,8 +163,8 @@ but they aren’t officially documented:</p>
 <li><p><a class="reference external" href="https://docs.google.com/document/d/1w9IkR0_Gqmd5w4CZ2t_ZDZrNLYVirQPyMS41533HQZE/edit?usp=sharing">clang-refactor’s design document</a></p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="text-editors-and-ides">
+</section>
+<section id="text-editors-and-ides">
 <h3><a class="toc-backref" href="#id20">Text editors and IDEs</a><a class="headerlink" href="#text-editors-and-ides" title="Permalink to this headline">¶</a></h3>
 <p>To bring basic IDE-like features to text editor you need 2 things:</p>
 <ol class="arabic simple">
@@ -172,7 +173,7 @@ but they aren’t officially documented:</p>
 </ol>
 <p>With this, you can have features such as semantic code completion
 and on-the-fly syntax checking.</p>
-<div class="section" id="lsp">
+<section id="lsp">
 <h4><a class="toc-backref" href="#id21">LSP</a><a class="headerlink" href="#lsp" title="Permalink to this headline">¶</a></h4>
 <p>LSP stands for Language Server Protocol,
 see <a class="reference external" href="https://github.com/Microsoft/language-server-protocol">Microsoft/language-server-protocol on Github</a>.</p>
@@ -180,15 +181,15 @@ see <a class="reference external" href="https://github.com/Microsoft/language-se
 <li><p><a class="reference external" href="https://github.com/jacobdufault/cquery">https://github.com/jacobdufault/cquery</a></p></li>
 <li><p><a class="reference external" href="https://clang.llvm.org/extra/clangd.html">clangd</a></p></li>
 </ul>
-</div>
-<div class="section" id="atom">
+</section>
+<section id="atom">
 <h4><a class="toc-backref" href="#id22">Atom</a><a class="headerlink" href="#atom" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/AtomLinter/linter-clang">https://github.com/AtomLinter/linter-clang</a></p></li>
 <li><p><a class="reference external" href="https://github.com/joeroback/atom-clang">https://github.com/joeroback/atom-clang</a></p></li>
 </ul>
-</div>
-<div class="section" id="gnu-emacs">
+</section>
+<section id="gnu-emacs">
 <h4><a class="toc-backref" href="#id23">GNU Emacs</a><a class="headerlink" href="#gnu-emacs" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/abingham/emacs-ycmd">https://github.com/abingham/emacs-ycmd</a></p></li>
@@ -197,17 +198,17 @@ see <a class="reference external" href="https://github.com/Microsoft/language-se
 <li><p><a class="reference external" href="https://github.com/randomphrase/ede-compdb">https://github.com/randomphrase/ede-compdb</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Sarcasm/irony-mode">https://github.com/Sarcasm/irony-mode</a></p></li>
 </ul>
-</div>
-<div class="section" id="vim">
+</section>
+<section id="vim">
 <h4><a class="toc-backref" href="#id24">Vim</a><a class="headerlink" href="#vim" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><a class="reference external" href="http://valloric.github.io/YouCompleteMe">http://valloric.github.io/YouCompleteMe</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Rip-Rip/clang_complete">https://github.com/Rip-Rip/clang_complete</a></p></li>
 <li><p><a class="reference external" href="https://github.com/jeaye/color_coded">https://github.com/jeaye/color_coded</a></p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="other-tools">
+</section>
+</section>
+<section id="other-tools">
 <h3><a class="toc-backref" href="#id25">Other tools</a><a class="headerlink" href="#other-tools" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/rizsotto/scan-build">scan-build</a>, the Clang Static Analyzer CLI,
@@ -235,9 +236,9 @@ article.</p></li>
 <li><p><a class="reference external" href="http://clang.llvm.org/docs/ExternalClangExamples.html">http://clang.llvm.org/docs/ExternalClangExamples.html</a></p></li>
 </ul>
 </div>
-</div>
-</div>
-<div class="section" id="how-to-generate-a-json-compilation-database">
+</section>
+</section>
+<section id="how-to-generate-a-json-compilation-database">
 <h2><a class="toc-backref" href="#id26">How to generate a JSON Compilation Database?</a><a class="headerlink" href="#how-to-generate-a-json-compilation-database" title="Permalink to this headline">¶</a></h2>
 <div class="contents local topic" id="id3">
 <ul class="simple">
@@ -266,11 +267,11 @@ article.</p></li>
 </li>
 </ul>
 </div>
-<div class="section" id="build-systems-and-compilers">
+<section id="build-systems-and-compilers">
 <h3><a class="toc-backref" href="#id51">Build systems and compilers</a><a class="headerlink" href="#build-systems-and-compilers" title="Permalink to this headline">¶</a></h3>
 <p>This section describes build tools which natively support
 the generation of a compilation database.</p>
-<div class="section" id="bazel">
+<section id="bazel">
 <h4><a class="toc-backref" href="#id52">Bazel</a><a class="headerlink" href="#bazel" title="Permalink to this headline">¶</a></h4>
 <p>Google/Kythe as an experimental_action_listener to produce a compilation database:</p>
 <ul class="simple">
@@ -279,8 +280,8 @@ the generation of a compilation database.</p>
 <p>There is also <a class="reference external" href="https://github.com/grailbio/bazel-compilation-database">bazel-compilation-database</a>,
 which is faster, easier to setup and does not require a full build,
 at the cost of being less accurate.</p>
-</div>
-<div class="section" id="clang">
+</section>
+<section id="clang">
 <h4><a class="toc-backref" href="#id53">Clang</a><a class="headerlink" href="#clang" title="Permalink to this headline">¶</a></h4>
 <p>Clang’s <a class="reference external" href="https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-mj">-MJ option</a>
 generates a compilation database entry per input (requires <code class="docutils literal notranslate"><span class="pre">Clang</span> <span class="pre">&gt;=</span> <span class="pre">5.0</span></code>).</p>
@@ -305,8 +306,8 @@ it is possible to use (GNU) <code class="docutils literal notranslate"><span cla
 <li><p>remove the trailing comma of the last entry (to be JSON compliant)</p></li>
 <li><p>insert the closing bracket: <code class="docutils literal notranslate"><span class="pre">]</span></code></p></li>
 </ul>
-</div>
-<div class="section" id="cmake">
+</section>
+<section id="cmake">
 <h4><a class="toc-backref" href="#id54">CMake</a><a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h4>
 <p>To generate a JSON compilation database with <a class="reference external" href="https://cmake.org">CMake</a>,
 enable the <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html">CMAKE_EXPORT_COMPILE_COMMANDS</a> option
@@ -316,8 +317,8 @@ enable the <a class="reference external" href="https://cmake.org/cmake/help/late
 </pre></div>
 </div>
 <p>This will create a file name <code class="docutils literal notranslate"><span class="pre">compile_commands.json</span></code> in the build directory.</p>
-</div>
-<div class="section" id="ninja">
+</section>
+<section id="ninja">
 <h4><a class="toc-backref" href="#id55">Ninja</a><a class="headerlink" href="#ninja" title="Permalink to this headline">¶</a></h4>
 <p>To generate a JSON compilation database with <a class="reference external" href="https://ninja-build.org">Ninja</a>,
 use the <a class="reference external" href="https://ninja-build.org/manual.html#_extra_tools">-t compdb</a> option (requires <code class="docutils literal notranslate"><span class="pre">Ninja</span> <span class="pre">&gt;=</span> <span class="pre">1.2</span></code>).
@@ -331,8 +332,8 @@ This option takes a list of rules as argument.</p>
 <p>Ninja &lt; 1.10 were more difficult to use,
 they required a rule name to be specified as an argument.</p>
 </div>
-</div>
-<div class="section" id="qbs">
+</section>
+<section id="qbs">
 <h4><a class="toc-backref" href="#id56">Qbs</a><a class="headerlink" href="#qbs" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://doc.qt.io/qbs/">qbs</a> natively support
 the generation of a compilation database.</p>
@@ -340,8 +341,8 @@ the generation of a compilation database.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qbs</span> <span class="n">generate</span> <span class="o">--</span><span class="n">generator</span> <span class="n">clangdb</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="waf">
+</section>
+<section id="waf">
 <h4><a class="toc-backref" href="#id57">waf</a><a class="headerlink" href="#waf" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://waf.io">waf</a> supports the generation of
 a JSON Compilation database by adding the following lines to the wfscript:</p>
@@ -351,9 +352,9 @@ a JSON Compilation database by adding the following lines to the wfscript:</p>
     <span class="n">conf</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;clang_compilation_database&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="specialized-tools">
+</section>
+</section>
+<section id="specialized-tools">
 <h3><a class="toc-backref" href="#id58">Specialized tools</a><a class="headerlink" href="#specialized-tools" title="Permalink to this headline">¶</a></h3>
 <p>Some build systems do not support generating a compilation database.</p>
 <p>A non-exhaustive list, includes:</p>
@@ -362,7 +363,7 @@ a JSON Compilation database by adding the following lines to the wfscript:</p>
 <li><p>KBuild, the Linux Kernel Makefiles</p></li>
 </ul>
 <p>For this reason, a few tools have emerged to respond to this issue.</p>
-<div class="section" id="bear-and-intercept-build">
+<section id="bear-and-intercept-build">
 <h4><a class="toc-backref" href="#id59">bear and intercept-build</a><a class="headerlink" href="#bear-and-intercept-build" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/rizsotto/Bear">Bear</a> and <cite>intercept-build</cite> from <a class="reference external" href="https://github.com/rizsotto/scan-build">scan-build</a>,
 are two tools from <a class="reference external" href="https://github.com/rizsotto">László Nagy</a>,
@@ -386,8 +387,8 @@ It’s reasonable to think that someday, distributions will offer it as package.
 </pre></div>
 </div>
 <p>A file named <code class="docutils literal notranslate"><span class="pre">compile_commands.json</span></code> is created in the current directory.</p>
-</div>
-<div class="section" id="cdcd">
+</section>
+<section id="cdcd">
 <h4><a class="toc-backref" href="#id60">cdcd</a><a class="headerlink" href="#cdcd" title="Permalink to this headline">¶</a></h4>
 <p>The <a class="reference external" href="https://github.com/gicmo/cdcc">cdcc</a> uses a compiler wrapper
 to write an sqlite3 database,
@@ -400,8 +401,8 @@ for the <a class="reference external" href="https://developer.gnome.org/jhbuild/
 <li><p><a class="reference external" href="https://christian.kellner.me/2017/03/28/emacs-as-c-ide-and-jhbuild/">https://christian.kellner.me/2017/03/28/emacs-as-c-ide-and-jhbuild/</a></p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="codechecker-log">
+</section>
+<section id="codechecker-log">
 <h4><a class="toc-backref" href="#id61">CodeChecker log</a><a class="headerlink" href="#codechecker-log" title="Permalink to this headline">¶</a></h4>
 <p>The <a class="reference external" href="https://github.com/Ericsson/codechecker/tree/5ae34cf9f234225852debd3022afac2abadc9a64/external-source-deps/build-logger">ld logger</a> tool from <a class="reference external" href="https://github.com/Ericsson/codechecker">codechecker</a>
 has an implementation of a build interceptor
@@ -437,13 +438,13 @@ but also for linking:</p>
 </li>
 </ul>
 <p>Luckily, with <code class="docutils literal notranslate"><span class="pre">intercept-build</span></code>, these issues are fixed.</p>
-</div>
-<div class="section" id="compdb">
+</section>
+<section id="compdb">
 <h4><a class="toc-backref" href="#id62">compdb</a><a class="headerlink" href="#compdb" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/Sarcasm/compdb">compdb</a> is a tool to manipulate compilation databases.
 It can generate a compilation database for header files.</p>
-</div>
-<div class="section" id="compiledb-generator">
+</section>
+<section id="compiledb-generator">
 <h4><a class="toc-backref" href="#id63">compiledb-generator</a><a class="headerlink" href="#compiledb-generator" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/nickdiego/compiledb-generator">compiledb-generator</a>
 is a tool to generate compilation database for make-based build systems.
@@ -458,16 +459,16 @@ It works by parsing the output of commands like <code class="docutils literal no
 </div>
 <p>There is also a specialized command <code class="docutils literal notranslate"><span class="pre">compiledb-aosp</span></code>,
 to deal with <a class="reference external" href="https://source.android.com/">AOSP</a>.</p>
-</div>
-<div class="section" id="sourcetrail-extension-for-visual-studio">
+</section>
+<section id="sourcetrail-extension-for-visual-studio">
 <h4><a class="toc-backref" href="#id64">Sourcetrail Extension for Visual Studio</a><a class="headerlink" href="#sourcetrail-extension-for-visual-studio" title="Permalink to this headline">¶</a></h4>
 <p>The <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=vs-publisher-1208751.SourcetrailExtensino">Sourcetrail Extension</a> for Visual Studio is a GUI tool that generates
 JSON Compilation Databases from VS Solutions.
 A wide range of VS versions seems to be supported.</p>
-</div>
-<div class="section" id="sw-btrace">
+</section>
+<section id="sw-btrace">
 <h4><a class="toc-backref" href="#id65">sw-btrace</a><a class="headerlink" href="#sw-btrace" title="Permalink to this headline">¶</a></h4>
-<p><a class="reference external" href="https://github.com/rprichard/sourceweb">sourceweb</a>’s <a class="reference external" href="https://github.com/rprichard/sourceweb#btrace">btrace</a> tool, aka <code class="docutils literal notranslate"><span class="pre">sw-btrace</span></code>, use the same principle as <a class="reference internal" href="#bear-and-intercept-build">bear and intercept-build</a>.</p>
+<p><a class="reference external" href="https://github.com/rprichard/sourceweb">sourceweb</a>‘s <a class="reference external" href="https://github.com/rprichard/sourceweb#btrace">btrace</a> tool, aka <code class="docutils literal notranslate"><span class="pre">sw-btrace</span></code>, use the same principle as <a class="reference internal" href="#bear-and-intercept-build">bear and intercept-build</a>.</p>
 <p>The generation is done in 2 steps:</p>
 <ol class="arabic simple">
 <li><p>Run <code class="docutils literal notranslate"><span class="pre">sw-btrace</span> <span class="pre">BUILD_COMMAND</span></code> to log the compilation.</p></li>
@@ -480,8 +481,8 @@ out of the compilation log.</p></li>
 </pre></div>
 </div>
 <p>A file named <code class="docutils literal notranslate"><span class="pre">compile_commands.json</span></code> is created in the current directory.</p>
-</div>
-<div class="section" id="tee3-commands-to-compilation-database">
+</section>
+<section id="tee3-commands-to-compilation-database">
 <h4><a class="toc-backref" href="#id66">tee3/commands_to_compilation_database</a><a class="headerlink" href="#tee3-commands-to-compilation-database" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/tee3/commands_to_compilation_database">tee3/commands_to_compilation_database</a>
 can generate compilation databases for Boost.Build, <code class="docutils literal notranslate"><span class="pre">make</span></code>,
@@ -490,8 +491,8 @@ to match the build output.</p>
 <p>It also provides a tools to generate a compilation database
 from files specified to the standard input,
 and compile options specified on the command line.</p>
-</div>
-<div class="section" id="xcpretty">
+</section>
+<section id="xcpretty">
 <h4><a class="toc-backref" href="#id67">xcpretty</a><a class="headerlink" href="#xcpretty" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/supermarin/xcpretty">xcpretty</a> can generate a compilation database for Xcode projects.
 To do so, it uses the <code class="docutils literal notranslate"><span class="pre">xcodebuild</span></code> output.</p>
@@ -499,14 +500,14 @@ To do so, it uses the <code class="docutils literal notranslate"><span class="pr
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xcodebuild</span> <span class="o">|</span> <span class="n">xcpretty</span> <span class="o">-</span><span class="n">r</span> <span class="n">json</span><span class="o">-</span><span class="n">compilation</span><span class="o">-</span><span class="n">database</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="other-compilation-databases-and-tools">
+</section>
+</section>
+</section>
+<section id="other-compilation-databases-and-tools">
 <h2><a class="toc-backref" href="#id44">Other compilation databases and tools</a><a class="headerlink" href="#other-compilation-databases-and-tools" title="Permalink to this headline">¶</a></h2>
 <p>This section shows that people invented their own compilation database version.
 Either because no standards existed yet, or because of specialized needs.</p>
-<div class="section" id="cc-args-py">
+<section id="cc-args-py">
 <h3><a class="toc-backref" href="#id45">cc_args.py</a><a class="headerlink" href="#cc-args-py" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference internal" href="#cc-args-py">cc_args.py</a> script
 from the Vim plugin <a class="reference external" href="https://github.com/Rip-Rip/clang_complete">clang_complete</a>.</p>
@@ -516,8 +517,8 @@ configuration file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">CC</span><span class="o">=</span><span class="s1">&#39;~/.vim/bin/cc_args.py gcc&#39;</span> <span class="n">CXX</span><span class="o">=</span><span class="s1">&#39;~/.vim/bin/cc_args.py g++&#39;</span> <span class="o">-</span><span class="n">B</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="gccrec">
+</section>
+<section id="gccrec">
 <h3><a class="toc-backref" href="#id46">gccrec</a><a class="headerlink" href="#gccrec" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">gccrec</span></code> tool from the now unmaintained <a class="reference external" href="https://github.com/m2ym/gccsense">gccsense</a> project.</p>
 <p>The tool records the compile options in an SQLite database.</p>
@@ -526,8 +527,8 @@ configuration file.</p>
 <li><p><a class="reference external" href="https://github.com/m2ym/gccsense/blob/67c76de401b3d11ccbba0e6d782c8686a341aabf/doc/manual.txt#L205-L252">txt</a></p></li>
 <li><p><a class="reference external" href="https://web.archive.org/web/20150223192059/http://cx4a.org/software/gccsense/manual.html#gccrec">HTML</a></p></li>
 </ul>
-</div>
-<div class="section" id="rtags">
+</section>
+<section id="rtags">
 <h3><a class="toc-backref" href="#id47">rtags</a><a class="headerlink" href="#rtags" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference external" href="https://github.com/Andersbakken/rtags">rtags</a> project has a gcc wrapper named <code class="docutils literal notranslate"><span class="pre">gcc-rtags-wrapper.sh</span></code>
 to help feed its internal compilation database.</p>
@@ -536,8 +537,8 @@ to help feed its internal compilation database.</p>
 <li><p>fixed link: <a class="reference external" href="https://github.com/Andersbakken/rtags/tree/499db6f98cc725bca66d122bce571adcdfa32187#setup">https://github.com/Andersbakken/rtags/tree/499db6f98cc725bca66d122bce571adcdfa32187#setup</a></p></li>
 <li><p>latest: <a class="reference external" href="https://github.com/Andersbakken/rtags/#setup">https://github.com/Andersbakken/rtags/#setup</a></p></li>
 </ul>
-</div>
-<div class="section" id="ycm-generator">
+</section>
+<section id="ycm-generator">
 <h3><a class="toc-backref" href="#id48">YCM-Generator</a><a class="headerlink" href="#ycm-generator" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/rdnetto/YCM-Generator">YCM-Generator</a> works differently than <a class="reference internal" href="#bear-and-intercept-build">bear and intercept-build</a>.
 It builds a project using a <em>fake toolchain</em>.
@@ -545,9 +546,9 @@ This is faster than doing a full build,
 because the fake toolchain is composed of trivial programs.</p>
 <p>The tool does not actually generate a “JSON Compilation Database”,
 instead it creates a configuration file for <a class="reference external" href="https://github.com/Valloric/YouCompleteMe">YouCompleteMe</a>.</p>
-</div>
-</div>
-<div class="section" id="case-studies-on-a-few-open-source-projects">
+</section>
+</section>
+<section id="case-studies-on-a-few-open-source-projects">
 <h2><a class="toc-backref" href="#id49">Case studies on a few open source projects</a><a class="headerlink" href="#case-studies-on-a-few-open-source-projects" title="Permalink to this headline">¶</a></h2>
 <p>This section describes how to generate a compilation database
 for a few open source projects.
@@ -574,7 +575,7 @@ just to make the file show up in the database,
 it’s not pleasant.</p>
 </dd>
 </dl>
-<div class="section" id="git">
+<section id="git">
 <h3><a class="toc-backref" href="#id50">git</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://git-scm.com/">git</a> uses a custom Makefile and a <code class="docutils literal notranslate"><span class="pre">configure</span></code> scripts for the build.
 The build system does not seem to have native support
@@ -604,9 +605,9 @@ This is used in this example to match the developer workflow better.</p>
 <dd><p><a class="reference external" href="https://github.com/Ericsson/codechecker/blob/a83bcfde83c432b9b7ef5e99fae1745c91015fec/codechecker_lib/build_manager.py#L66-L85">https://github.com/Ericsson/codechecker/blob/a83bcfde83c432b9b7ef5e99fae1745c91015fec/codechecker_lib/build_manager.py#L66-L85</a></p>
 </dd>
 </dl>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
       </div>
@@ -617,14 +618,14 @@ This is used in this example to match the developer workflow better.</p>
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="../index.html">Contents</a>
         &#160;&#160;::&#160;&#160;
-        <a href="../tools/index.html">Tools</a>&#160;&#160;»
+        <a href="cmake.html">CMake</a>&#160;&#160;»
         </p>
 
       </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2016, Guillaume Papin.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.2.
+        &#169; Copyright 2016-2021, Guillaume Papin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
     </div>
   </body>
 </html>
