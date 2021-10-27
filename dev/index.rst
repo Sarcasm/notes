@@ -9,3 +9,4 @@ Stuff related to programming and programmer tooling.
    clang-tidy
    compdb
    compilation-database
+   cmake
