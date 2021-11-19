@@ -273,13 +273,20 @@ article.</p></li>
 the generation of a compilation database.</p>
 <section id="bazel">
 <h4><a class="toc-backref" href="#id52">Bazel</a><a class="headerlink" href="#bazel" title="Permalink to this headline">¶</a></h4>
-<p>Google/Kythe as an experimental_action_listener to produce a compilation database:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/google/kythe/blob/cb58e9b4b5ee911db9495b382c9fe50e936f2bb3/tools/cpp/generate_compilation_database.sh">github.com/google/kythe: tools/cpp/generate_compilation_database.sh</a></p></li>
-</ul>
-<p>There is also <a class="reference external" href="https://github.com/grailbio/bazel-compilation-database">bazel-compilation-database</a>,
-which is faster, easier to setup and does not require a full build,
+<ul>
+<li><p><a class="reference external" href="https://github.com/kythe/kythe/blob/f215df07e18d1d99535a2839b197a81130fcfd90/tools/cpp/generate_compilation_database.sh">github.com/google/kythe: tools/cpp/generate_compilation_database.sh</a></p>
+<p>Uses experimental_action_listener to produce a compilation database.</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/hedronvision/bazel-compile-commands-extractor">github.com/hedronvision/bazel-compile-commands-extractor: Hedron’s Compile Commands Extractor for Bazel</a></p>
+<p>Faster, does not require a full build (it is based on “Action Graph Query (aquery)”).</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/grailbio/bazel-compilation-database">github.com/grailbio/bazel-compilation-database</a></p>
+<p>Also faster than Kythe’s experimental_action_listener,
+easier to setup and does not require a full build,
 at the cost of being less accurate.</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/stackb/bazel-stack-vscode-cc">github.com/stackb/bazel-stack-vscode-cc</a></p></li>
+</ul>
 </section>
 <section id="clang">
 <h4><a class="toc-backref" href="#id53">Clang</a><a class="headerlink" href="#clang" title="Permalink to this headline">¶</a></h4>

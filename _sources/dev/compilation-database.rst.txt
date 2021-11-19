@@ -182,13 +182,21 @@ the generation of a compilation database.
 Bazel
 ^^^^^
 
-Google/Kythe as an experimental_action_listener to produce a compilation database:
+- `github.com/google/kythe: tools/cpp/generate_compilation_database.sh <https://github.com/kythe/kythe/blob/f215df07e18d1d99535a2839b197a81130fcfd90/tools/cpp/generate_compilation_database.sh>`_
 
-- `github.com/google/kythe: tools/cpp/generate_compilation_database.sh <https://github.com/google/kythe/blob/cb58e9b4b5ee911db9495b382c9fe50e936f2bb3/tools/cpp/generate_compilation_database.sh>`_
+  Uses experimental_action_listener to produce a compilation database.
 
-There is also `bazel-compilation-database <https://github.com/grailbio/bazel-compilation-database>`_,
-which is faster, easier to setup and does not require a full build,
-at the cost of being less accurate.
+- `github.com/hedronvision/bazel-compile-commands-extractor: Hedron's Compile Commands Extractor for Bazel <https://github.com/hedronvision/bazel-compile-commands-extractor>`_
+
+  Faster, does not require a full build (it is based on "Action Graph Query (aquery)").
+
+- `github.com/grailbio/bazel-compilation-database <https://github.com/grailbio/bazel-compilation-database>`_
+
+  Also faster than Kythe's experimental_action_listener,
+  easier to setup and does not require a full build,
+  at the cost of being less accurate.
+
+- `github.com/stackb/bazel-stack-vscode-cc <https://github.com/stackb/bazel-stack-vscode-cc>`_
 
 Clang
 ^^^^^
