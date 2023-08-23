@@ -159,6 +159,9 @@ Other tools
 
 * `CLion <https://www.jetbrains.com/clion/>`_
 
+* `kompiledb <https://github.com/saveourtool/kompiledb>`_, the Kotlin bindings
+  to compilation database format.
+
 .. seealso::
 
    Some of the tools listed here:

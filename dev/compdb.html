@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>compdb &#8212; Sarcasm notebook</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -12,7 +12,9 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Compilation database" href="compilation-database.html" />
@@ -37,8 +39,8 @@
         
         
   <section id="compdb">
-<h1>compdb<a class="headerlink" href="#compdb" title="Permalink to this headline">¶</a></h1>
-<div class="contents local topic" id="contents">
+<h1>compdb<a class="headerlink" href="#compdb" title="Permalink to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#release-procedure" id="id1">Release procedure</a></p>
 <ul>
@@ -49,20 +51,20 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="release-procedure">
-<h2><a class="toc-backref" href="#id1">Release procedure</a><a class="headerlink" href="#release-procedure" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Release procedure</a><a class="headerlink" href="#release-procedure" title="Permalink to this heading">¶</a></h2>
 <p>Clone latest Github release to a new <code class="docutils literal notranslate"><span class="pre">compdb-dist</span></code> directory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">Sarcasm</span><span class="o">/</span><span class="n">compdb</span><span class="o">.</span><span class="n">git</span> <span class="n">compdb</span><span class="o">-</span><span class="n">dist</span>
 <span class="n">cd</span> <span class="n">compdb</span><span class="o">-</span><span class="n">dist</span>
 </pre></div>
 </div>
 <section id="increment-version">
-<h3><a class="toc-backref" href="#id2">Increment version</a><a class="headerlink" href="#increment-version" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Increment version</a><a class="headerlink" href="#increment-version" title="Permalink to this heading">¶</a></h3>
 <p>Increment version in <code class="docutils literal notranslate"><span class="pre">compdb/__about__.py</span></code>.</p>
 </section>
 <section id="run-tests">
-<h3><a class="toc-backref" href="#id3">Run tests</a><a class="headerlink" href="#run-tests" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Run tests</a><a class="headerlink" href="#run-tests" title="Permalink to this heading">¶</a></h3>
 <p>Run test suite:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tox</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">missing</span><span class="o">-</span><span class="n">interpreters</span>
 </pre></div>
@@ -99,11 +101,11 @@
 </div>
 </section>
 <section id="make-git-tag">
-<h3><a class="toc-backref" href="#id4">Make git tag</a><a class="headerlink" href="#make-git-tag" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">COMPDB_VERSION</span><span class="o">=</span><span class="k">$(</span>python compdb version --short<span class="k">)</span>
-<span class="nb">echo</span> <span class="s2">&quot;tagging </span><span class="nv">$COMPDB_VERSION</span><span class="s2">&quot;</span>
-git tag -a v<span class="nv">$COMPDB_VERSION</span> -m <span class="s2">&quot;compdb </span><span class="nv">$COMPDB_VERSION</span><span class="s2">&quot;</span>
-git push --follow-tags
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Make git tag</a><a class="headerlink" href="#make-git-tag" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">COMPDB_VERSION</span><span class="o">=</span><span class="k">$(</span>python<span class="w"> </span>compdb<span class="w"> </span>version<span class="w"> </span>--short<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;tagging </span><span class="nv">$COMPDB_VERSION</span><span class="s2">&quot;</span>
+git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v<span class="nv">$COMPDB_VERSION</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;compdb </span><span class="nv">$COMPDB_VERSION</span><span class="s2">&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>--follow-tags
 </pre></div>
 </div>
 <p>Notes:</p>
@@ -139,7 +141,7 @@ that are reacheable (an ancestor) from the pushed commits.</p></li>
 </ul>
 </section>
 <section id="publish-on-pypi">
-<h3><a class="toc-backref" href="#id5">Publish on Pypi</a><a class="headerlink" href="#publish-on-pypi" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Publish on Pypi</a><a class="headerlink" href="#publish-on-pypi" title="Permalink to this heading">¶</a></h3>
 <p>One time configuration,
 steps to do again only if the release environment changes.</p>
 <p>Create a <code class="docutils literal notranslate"><span class="pre">~/.pypirc</span></code> with this content:</p>
@@ -147,7 +149,7 @@ steps to do again only if the release environment changes.</p>
 <span class="na">index-servers</span><span class="o">=</span><span class="s">pypi</span>
 
 <span class="k">[pypi]</span>
-<span class="na">username</span> <span class="o">=</span> <span class="s">Sarcasm</span>
+<span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Sarcasm</span>
 <span class="na">EOF</span>
 </pre></div>
 </div>
@@ -187,7 +189,7 @@ steps to do again only if the release environment changes.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016-2021, Guillaume Papin.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>
