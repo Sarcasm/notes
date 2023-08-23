@@ -1,25 +1,23 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>CMake &#8212; Sarcasm notebook</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/haiku.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <title>CMake &#8212; Sarcasm tips  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/haiku.css?v=e491ac2d" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tools" href="../tools/index.html" />
     <link rel="prev" title="Compilation database" href="compilation-database.html" /> 
   </head><body>
       <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
-          <span>Sarcasm notebook</span></a></h1>
+          <span>Sarcasm tips  documentation</span></a></h1>
         <h2 class="heading"><span>CMake</span></h2>
       </div>
       <div class="topnav" role="navigation" aria-label="top navigation">
@@ -37,8 +35,8 @@
         
         
   <section id="cmake">
-<h1>CMake<a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h1>
-<div class="contents local topic" id="contents">
+<h1>CMake<a class="headerlink" href="#cmake" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p></li>
 <li><p><a class="reference internal" href="#compiler-options" id="id2">Compiler options</a></p>
@@ -58,9 +56,9 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="introduction">
-<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
 <p>List of CMake patterns/best practices.</p>
 <p>These patterns are directed towards people writing the project CMake files,
 but accounts for how the project CMake build
@@ -69,11 +67,11 @@ will be consumed by packagers or external developers.</p>
 and to maximize the portability and easy of use for packagers or external developers.</p>
 </section>
 <section id="compiler-options">
-<h2><a class="toc-backref" href="#id2">Compiler options</a><a class="headerlink" href="#compiler-options" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Compiler options</a><a class="headerlink" href="#compiler-options" title="Link to this heading">¶</a></h2>
 <section id="c-standard">
-<h3><a class="toc-backref" href="#id3">C++ standard</a><a class="headerlink" href="#c-standard" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">C++ standard</a><a class="headerlink" href="#c-standard" title="Link to this heading">¶</a></h3>
 <section id="do-s">
-<h4><a class="toc-backref" href="#id4">Do’s</a><a class="headerlink" href="#do-s" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id4" role="doc-backlink">Do’s</a><a class="headerlink" href="#do-s" title="Link to this heading">¶</a></h4>
 <p>Set a minimum standard, not an exact standard.</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">target_compile_features(foo</span> <span class="pre">PUBLIC</span> <span class="pre">cxx_std_11)</span></code>
 to specify the minimum standard your target requires:</p>
@@ -85,22 +83,22 @@ to specify the minimum standard your target requires:</p>
 e.g. a packager may want to upgrade to C++20 for ABI-compatibility reasons.
 This can be done by setting <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CXX_STANDARD.html">CMAKE_CXX_STANDARD</a> from a toolchain file,
 or from the command line:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake -DCMAKE_CXX_STANDARD<span class="o">=</span><span class="m">20</span> ...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_CXX_STANDARD<span class="o">=</span><span class="m">20</span><span class="w"> </span>...
 </pre></div>
 </div>
 <p>CMake will also respect the <code class="docutils literal notranslate"><span class="pre">-std=&lt;standard&gt;</span></code> flag,
 if specified specified from the environment variable <code class="docutils literal notranslate"><span class="pre">CXXFLAGS</span></code>
 (but this is read only during the initial project generation):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>env <span class="nv">CXXFLAGS</span><span class="o">=</span>-std<span class="o">=</span>c++20 cmake ...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>env<span class="w"> </span><span class="nv">CXXFLAGS</span><span class="o">=</span>-std<span class="o">=</span>c++20<span class="w"> </span>cmake<span class="w"> </span>...
 </pre></div>
 </div>
 <p>or from the command line <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_FLAGS.html">CMAKE_CXX_FLAGS</a>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake -DCMAKE_CXX_FLAGS<span class="o">=</span>-std<span class="o">=</span>c++20 ...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_CXX_FLAGS<span class="o">=</span>-std<span class="o">=</span>c++20<span class="w"> </span>...
 </pre></div>
 </div>
 <p>When the compiler does not support the given standard,
 CMake will generate an error during generation:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake ..
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>..
 <span class="go">-- The CXX compiler identification is GNU 4.8.5</span>
 <span class="go">-- Detecting CXX compiler ABI info</span>
 <span class="go">-- Detecting CXX compiler ABI info - done</span>
@@ -125,7 +123,7 @@ CMake will generate an error during generation:</p>
 set it explicitely using one of the aforementioned methods.</p>
 </section>
 <section id="don-ts">
-<h4><a class="toc-backref" href="#id5">Don’ts</a><a class="headerlink" href="#don-ts" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id5" role="doc-backlink">Don’ts</a><a class="headerlink" href="#don-ts" title="Link to this heading">¶</a></h4>
 <p>(don’t) set <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CXX_STANDARD.html">CMAKE_CXX_STANDARD</a> in a CMakeLists.txt:</p>
 <ul>
 <li><p>It is targeted to toolchain files users,
@@ -136,7 +134,7 @@ for packagers/developers that want to use a specific version.</p>
 </ul>
 </section>
 <section id="see-also">
-<h4><a class="toc-backref" href="#id6">See also</a><a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id6" role="doc-backlink">See also</a><a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p><a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-compile-features.7.html#requiring-language-standards">https://cmake.org/cmake/help/latest/manual/cmake-compile-features.7.html#requiring-language-standards</a></p></li>
 </ul>
@@ -144,7 +142,7 @@ for packagers/developers that want to use a specific version.</p>
 </section>
 </section>
 <section id="optional-dependencies">
-<h2><a class="toc-backref" href="#id7">Optional dependencies</a><a class="headerlink" href="#optional-dependencies" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Optional dependencies</a><a class="headerlink" href="#optional-dependencies" title="Link to this heading">¶</a></h2>
 <p>Third party or platform-specific integrations
 are useful to represent as optional dependencies.</p>
 <p>As someone who wants to quick-test a project,
@@ -152,26 +150,26 @@ having interest in the core of the project,
 I prefer to have the optional dependencies auto-detected
 so that I can get started without being encombered by build issues
 or having to install system packages:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir build
-<span class="gp">$ </span><span class="nb">cd</span> build
-<span class="gp">$ </span>cmake ..
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>build
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>build
+<span class="gp">$ </span>cmake<span class="w"> </span>..
 </pre></div>
 </div>
 <p>As a packager, or as a developer working on the optional feature,
 I want control of the detection,
 so that I can make sure the project works with (or without) it:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir build
-<span class="gp">$ </span><span class="nb">cd</span> build
-<span class="gp">$ </span>cmake -DWITH_FOO<span class="o">=</span>ON ..
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>build
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>build
+<span class="gp">$ </span>cmake<span class="w"> </span>-DWITH_FOO<span class="o">=</span>ON<span class="w"> </span>..
 </pre></div>
 </div>
 <section id="the-pattern">
-<h3><a class="toc-backref" href="#id8">The pattern</a><a class="headerlink" href="#the-pattern" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">The pattern</a><a class="headerlink" href="#the-pattern" title="Link to this heading">¶</a></h3>
 <p>Declare an option <code class="docutils literal notranslate"><span class="pre">WITH_${INTEGRATION}</span></code> with 3 possible value:
 <code class="docutils literal notranslate"><span class="pre">AUTO</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">ON</span></code> and <code class="docutils literal notranslate"><span class="pre">OFF</span></code>:</p>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span> <span class="s2">&quot;AUTO&quot;</span> <span class="s">CACHE</span> <span class="s">STRING</span>
-  <span class="s2">&quot;Whether or not to support journald logging (this feature requires the systemd development package)&quot;</span><span class="p">)</span>
-<span class="nb">set_property</span><span class="p">(</span><span class="s">CACHE</span> <span class="s">WITH_JOURNALD</span> <span class="s">PROPERTY</span> <span class="s">STRINGS</span> <span class="s">AUTO</span> <span class="s">ON</span> <span class="s">OFF</span><span class="p">)</span>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="w"> </span><span class="s2">&quot;AUTO&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">STRING</span>
+<span class="w">  </span><span class="s2">&quot;Whether or not to support journald logging (this feature requires the systemd development package)&quot;</span><span class="p">)</span>
+<span class="nb">set_property</span><span class="p">(</span><span class="s">CACHE</span><span class="w"> </span><span class="s">WITH_JOURNALD</span><span class="w"> </span><span class="s">PROPERTY</span><span class="w"> </span><span class="s">STRINGS</span><span class="w"> </span><span class="s">AUTO</span><span class="w"> </span><span class="s">ON</span><span class="w"> </span><span class="s">OFF</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Thanks to the use of
@@ -185,34 +183,34 @@ which is nice for discoverability:</p>
 </li>
 </ul>
 <p>Later on, when resolving dependencies:</p>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span> <span class="p">(</span><span class="s">WITH_JOURNALD</span> <span class="s">STREQUAL</span> <span class="s2">&quot;AUTO&quot;</span><span class="p">)</span>
-   <span class="nb">pkg_check_modules</span><span class="p">(</span><span class="s">libsystemd</span> <span class="s">IMPORTED_TARGET</span> <span class="s">libsystemd</span><span class="p">)</span>
-   <span class="c"># shadow origin value with ON/OFF,</span>
-   <span class="c"># so journald-specific code just has to check:</span>
-   <span class="c">#     if (WITH_JOURNALD)</span>
-   <span class="c">#         ...</span>
-   <span class="c">#     endif()</span>
-   <span class="nb">if</span> <span class="p">(</span><span class="s">libsystemd_FOUND</span><span class="p">)</span>
-     <span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span> <span class="s">ON</span><span class="p">)</span>
-   <span class="nb">else</span><span class="p">()</span>
-     <span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span> <span class="s">OFF</span><span class="p">)</span>
-   <span class="nb">endif</span><span class="p">()</span>
- <span class="nb">elseif</span> <span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="p">)</span>  <span class="c"># ON</span>
-   <span class="nb">pkg_check_modules</span><span class="p">(</span><span class="s">libsystemd</span> <span class="s">REQUIRED</span> <span class="s">IMPORTED_TARGET</span> <span class="s">libsystemd</span><span class="p">)</span>
- <span class="nb">endif</span><span class="p">()</span>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span><span class="w"> </span><span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="w"> </span><span class="s">STREQUAL</span><span class="w"> </span><span class="s2">&quot;AUTO&quot;</span><span class="p">)</span>
+<span class="w">   </span><span class="nb">pkg_check_modules</span><span class="p">(</span><span class="s">libsystemd</span><span class="w"> </span><span class="s">IMPORTED_TARGET</span><span class="w"> </span><span class="s">libsystemd</span><span class="p">)</span>
+<span class="w">   </span><span class="c"># shadow origin value with ON/OFF,</span>
+<span class="w">   </span><span class="c"># so journald-specific code just has to check:</span>
+<span class="w">   </span><span class="c">#     if (WITH_JOURNALD)</span>
+<span class="w">   </span><span class="c">#         ...</span>
+<span class="w">   </span><span class="c">#     endif()</span>
+<span class="w">   </span><span class="nb">if</span><span class="w"> </span><span class="p">(</span><span class="s">libsystemd_FOUND</span><span class="p">)</span>
+<span class="w">     </span><span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="w"> </span><span class="s">ON</span><span class="p">)</span>
+<span class="w">   </span><span class="nb">else</span><span class="p">()</span>
+<span class="w">     </span><span class="nb">set</span><span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="w"> </span><span class="s">OFF</span><span class="p">)</span>
+<span class="w">   </span><span class="nb">endif</span><span class="p">()</span>
+<span class="w"> </span><span class="nb">elseif</span><span class="w"> </span><span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="p">)</span><span class="w">  </span><span class="c"># ON</span>
+<span class="w">   </span><span class="nb">pkg_check_modules</span><span class="p">(</span><span class="s">libsystemd</span><span class="w"> </span><span class="s">REQUIRED</span><span class="w"> </span><span class="s">IMPORTED_TARGET</span><span class="w"> </span><span class="s">libsystemd</span><span class="p">)</span>
+<span class="w"> </span><span class="nb">endif</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>After we checked the special value <code class="docutils literal notranslate"><span class="pre">AUTO</span></code>,
 we shadow the variable with a boolean value.</p>
 <p>From now on, you can consider this option a boolean,
 check it with <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(WITH_JOURNALD)</span></code>, example:</p>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span> <span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="p">)</span>
-    <span class="nb">set_property</span><span class="p">(</span>
-      <span class="s">SOURCE</span> <span class="s">src/log_backends.cpp</span>
-      <span class="s">APPEND</span> <span class="s">PROPERTY</span> <span class="s">COMPILE_DEFINITIONS</span> <span class="s">WITH_JOURNALD</span>
-    <span class="p">)</span>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span><span class="w"> </span><span class="p">(</span><span class="s">WITH_JOURNALD</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">set_property</span><span class="p">(</span>
+<span class="w">      </span><span class="s">SOURCE</span><span class="w"> </span><span class="s">src/log_backends.cpp</span>
+<span class="w">      </span><span class="s">APPEND</span><span class="w"> </span><span class="s">PROPERTY</span><span class="w"> </span><span class="s">COMPILE_DEFINITIONS</span><span class="w"> </span><span class="s">WITH_JOURNALD</span>
+<span class="w">    </span><span class="p">)</span>
 
-  <span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">foo</span> <span class="s">PRIVATE</span> <span class="s">PkgConfig::libsystemd</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">foo</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">PkgConfig::libsystemd</span><span class="p">)</span>
 <span class="nb">endif</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -241,8 +239,8 @@ without breaking packagers explicit configurations.</p>
       </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2016-2021, Guillaume Papin.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    &#169; Copyright 2016-2021, Guillaume Papin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
     </div>
   </body>
 </html>
